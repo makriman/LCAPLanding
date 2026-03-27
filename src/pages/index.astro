@@ -1,0 +1,659 @@
+---
+import en from "../data/en.json";
+import fil from "../data/fil.json";
+import competitorConfig from "../data/competitors.json";
+import "../styles/global.css";
+
+const translations = { en, fil };
+const sendCurrencies = ["USD", "CAD", "GBP", "EUR", "SGD", "AED"];
+const receiveCurrencies = ["PHP"];
+
+const fallbackMidRate = competitorConfig.midMarketFallback;
+const referenceAmount = competitorConfig.referenceSendAmount;
+const asOfLabel = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(new Date(competitorConfig.asOf));
+
+const initialRows = competitorConfig.providers.map((provider) => {
+  const effectiveRate = fallbackMidRate * (1 - provider.marginPct / 100);
+  const recipientGets = Math.max((referenceAmount - provider.feeUsd) * effectiveRate, 0);
+
+  return {
+    effectiveRate,
+    recipientGets,
+  };
+});
+
+const testimonialFlagPairs = [
+  { from: "/flags/us.svg", to: "/flags/ph.svg" },
+  { from: "/flags/ca.svg", to: "/flags/ph.svg" },
+  { from: "/flags/ae.svg", to: "/flags/ph.svg" },
+  { from: "/flags/gb.svg", to: "/flags/ph.svg" },
+];
+
+const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News", "BusinessWorld"];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{en.meta.title}</title>
+    <meta name="description" content={en.meta.description} />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container">
+          <a class="brand" href="#hero" aria-label="Aspora Philippines home">
+            <span class="brand-mark" aria-hidden="true">A</span>
+            <span class="brand-copy">
+              <strong>Aspora</strong>
+              <span data-i18n="header.logoTag">{en.header.logoTag}</span>
+            </span>
+          </a>
+
+          <nav class="site-nav" aria-label="Primary">
+            <a href="#converter" data-i18n="header.nav.sendMoney">{en.header.nav.sendMoney}</a>
+            <a href="#gateway" data-i18n="header.nav.billPay">{en.header.nav.billPay}</a>
+            <a href="#footer" data-i18n="header.nav.helpCenter">{en.header.nav.helpCenter}</a>
+            <a href="#gateway" data-i18n="header.nav.roadmap">{en.header.nav.roadmap}</a>
+          </nav>
+
+          <div class="language-switch" aria-label={en.header.language.label} data-i18n-aria-label="header.language.label">
+            <button type="button" data-lang="en" data-i18n="header.language.english">{en.header.language.english}</button>
+            <button type="button" data-lang="fil" data-i18n="header.language.filipino">{en.header.language.filipino}</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="container">
+        <section id="hero" class="section-card hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <span class="eyebrow" data-i18n="hero.eyebrow">{en.hero.eyebrow}</span>
+            <h1 id="hero-title" data-i18n="hero.title">{en.hero.title}</h1>
+            <p data-i18n="hero.subtitle">{en.hero.subtitle}</p>
+
+            <div class="peso-visual" aria-hidden="true">
+              <div class="phone-frame">
+                <span class="peso-main">₱</span>
+                <span class="peso-float peso-float-a">₱</span>
+                <span class="peso-float peso-float-b">₱</span>
+              </div>
+              <span class="coin coin-a"></span>
+              <span class="coin coin-b"></span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#converter" data-i18n="hero.primaryCta">{en.hero.primaryCta}</a>
+              <a class="btn btn-secondary" href="#download" data-i18n="hero.secondaryCta">{en.hero.secondaryCta}</a>
+            </div>
+
+            <ul class="point-list" aria-label="Key selling points">
+              <li>
+                <span class="point-dot" aria-hidden="true"></span>
+                <span data-i18n="hero.points.secure">{en.hero.points.secure}</span>
+              </li>
+              <li>
+                <span class="point-dot" aria-hidden="true"></span>
+                <span data-i18n="hero.points.fast">{en.hero.points.fast}</span>
+              </li>
+              <li>
+                <span class="point-dot" aria-hidden="true"></span>
+                <span data-i18n="hero.points.transparent">{en.hero.points.transparent}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="converter" id="converter" aria-label="Currency converter">
+            <h2 data-i18n="converter.title">{en.converter.title}</h2>
+
+            <div class="form-grid">
+              <div class="form-field form-field-wide">
+                <label for="sendAmount" data-i18n="converter.sendAmount">{en.converter.sendAmount}</label>
+                <input class="input" id="sendAmount" type="number" min="0" step="0.01" value="500" inputmode="decimal" />
+              </div>
+
+              <div class="form-field">
+                <label for="sendCurrency" data-i18n="converter.sendCurrency">{en.converter.sendCurrency}</label>
+                <select class="select" id="sendCurrency">
+                  {sendCurrencies.map((currency) => <option value={currency}>{currency}</option>)}
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="receiveCurrency" data-i18n="converter.receiveCurrency">{en.converter.receiveCurrency}</label>
+                <select class="select" id="receiveCurrency">
+                  {receiveCurrencies.map((currency) => <option value={currency}>{currency}</option>)}
+                </select>
+              </div>
+
+              <div class="form-field form-field-wide">
+                <label for="transferFee" data-i18n="converter.fee">{en.converter.fee}</label>
+                <input class="input" id="transferFee" type="number" min="0" step="0.01" value="0" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="result-panel" aria-live="polite">
+              <span class="label" data-i18n="converter.recipientGets">{en.converter.recipientGets}</span>
+              <strong id="recipientValue">₱28,100.00</strong>
+              <span id="rateValue" class="meta-line">1 USD = 56.2000 PHP</span>
+              <span id="feeValue" class="meta-line">{en.converter.noFee}</span>
+            </div>
+
+            <p class="notice" id="converterStatus" data-i18n="converter.loading">{en.converter.loading}</p>
+            <p class="notice" data-i18n="converter.note">{en.converter.note}</p>
+            <a class="btn btn-primary" href="#download" data-i18n="converter.cta">{en.converter.cta}</a>
+          </div>
+        </section>
+
+        <section class="section-card" aria-labelledby="savings-title">
+          <h2 id="savings-title" class="section-title" data-i18n="savings.title">{en.savings.title}</h2>
+          <p class="section-subtitle" data-i18n="savings.subtitle">{en.savings.subtitle}</p>
+
+          <div class="comparison-meta">
+            <span id="referenceAmountText">{en.savings.reference}: US${referenceAmount.toFixed(2)}</span>
+            <span id="updatedAtText">{en.savings.updated}: {asOfLabel}</span>
+          </div>
+
+          <div class="comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="savings.headers.provider">{en.savings.headers.provider}</th>
+                  <th scope="col" data-i18n="savings.headers.rate">{en.savings.headers.rate}</th>
+                  <th scope="col" data-i18n="savings.headers.fee">{en.savings.headers.fee}</th>
+                  <th scope="col" data-i18n="savings.headers.recipient">{en.savings.headers.recipient}</th>
+                  <th scope="col" data-i18n="savings.headers.delivery">{en.savings.headers.delivery}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {competitorConfig.providers.map((provider, index) => (
+                  <tr data-provider={provider.id} class={provider.id === "aspora" ? "is-aspora" : undefined}>
+                    <td>
+                      {provider.name}
+                      <sup>{index + 1}</sup>
+                    </td>
+                    <td data-cell="rate">{initialRows[index].effectiveRate.toFixed(4)} PHP</td>
+                    <td data-cell="fee">{provider.feeUsd === 0 ? en.converter.noFee : `US$${provider.feeUsd.toFixed(2)}`}</td>
+                    <td data-cell="recipient">
+                      {new Intl.NumberFormat("en-PH", {
+                        style: "currency",
+                        currency: "PHP",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(initialRows[index].recipientGets)}
+                    </td>
+                    <td>
+                      <span class="delivery-pill">{provider.delivery}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p class="notice" data-i18n="savings.footnote">{en.savings.footnote}</p>
+          <h3 class="section-subtitle" data-i18n="savings.sourceTitle">{en.savings.sourceTitle}</h3>
+          <ol class="source-list">
+            {competitorConfig.providers.map((provider, index) => (
+              <li>
+                [{index + 1}] {provider.sourceLabel}: <a href={provider.sourceUrl} target="_blank" rel="noreferrer">{provider.sourceUrl}</a>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section class="section-card" aria-labelledby="stats-title">
+          <h2 id="stats-title" class="section-title" data-i18n="stats.title">{en.stats.title}</h2>
+          <div class="stats-grid">
+            <article class="stat-card">
+              <strong data-i18n="stats.transferredValue">{en.stats.transferredValue}</strong>
+              <p data-i18n="stats.transferredLabel">{en.stats.transferredLabel}</p>
+            </article>
+            <article class="stat-card">
+              <strong data-i18n="stats.savedValue">{en.stats.savedValue}</strong>
+              <p data-i18n="stats.savedLabel">{en.stats.savedLabel}</p>
+            </article>
+            <article class="stat-card">
+              <strong data-i18n="stats.countriesValue">{en.stats.countriesValue}</strong>
+              <p data-i18n="stats.countriesLabel">{en.stats.countriesLabel}</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card" aria-labelledby="testimonial-title">
+          <div class="testimonial-header">
+            <h2 id="testimonial-title" class="section-title" data-i18n="testimonials.title">{en.testimonials.title}</h2>
+            <div class="carousel-controls">
+              <button
+                id="testimonialPrev"
+                type="button"
+                class="icon-btn"
+                aria-label={en.testimonials.prev}
+                data-i18n-aria-label="testimonials.prev"
+              >
+                <span aria-hidden="true">←</span>
+              </button>
+              <button
+                id="testimonialNext"
+                type="button"
+                class="icon-btn"
+                aria-label={en.testimonials.next}
+                data-i18n-aria-label="testimonials.next"
+              >
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="testimonialTrack" class="testimonial-track">
+            {en.testimonials.cards.map((card, index) => (
+              <article class="testimonial-card">
+                <div class="testimonial-top">
+                  <span class="avatar" aria-hidden="true">{card.person.slice(0, 1)}</span>
+                  <div class="flag-pair" aria-hidden="true">
+                    <img class="flag" src={testimonialFlagPairs[index].from} alt="" loading="lazy" />
+                    <img class="flag" src={testimonialFlagPairs[index].to} alt="" loading="lazy" />
+                  </div>
+                </div>
+                <p data-i18n={`testimonials.cards.${index}.quote`}>{card.quote}</p>
+                <p class="person" data-i18n={`testimonials.cards.${index}.person`}>{card.person}</p>
+                <p class="location" data-i18n={`testimonials.cards.${index}.location`}>{card.location}</p>
+                <span class="rating" aria-label="Rated five out of five">★★★★★</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="section-card" aria-labelledby="security-title">
+          <h2 id="security-title" class="section-title" data-i18n="security.title">{en.security.title}</h2>
+          <div class="security-grid">
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">24</span>
+              <p data-i18n="security.point1">{en.security.point1}</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">S</span>
+              <p data-i18n="security.point2">{en.security.point2}</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">CS</span>
+              <p data-i18n="security.point3">{en.security.point3}</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="gateway" class="section-card" aria-labelledby="gateway-title">
+          <span class="badge" data-i18n="gateway.badge">{en.gateway.badge}</span>
+          <h2 id="gateway-title" class="section-title" data-i18n="gateway.title">{en.gateway.title}</h2>
+          <div class="gateway-grid">
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">FX</span>
+              <h3 data-i18n="gateway.feature1Title">{en.gateway.feature1Title}</h3>
+              <p data-i18n="gateway.feature1Body">{en.gateway.feature1Body}</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">BP</span>
+              <h3 data-i18n="gateway.feature2Title">{en.gateway.feature2Title}</h3>
+              <p data-i18n="gateway.feature2Body">{en.gateway.feature2Body}</p>
+            </article>
+            <article class="feature-card">
+              <span class="icon-square" aria-hidden="true">AR</span>
+              <h3 data-i18n="gateway.feature3Title">{en.gateway.feature3Title}</h3>
+              <p data-i18n="gateway.feature3Body">{en.gateway.feature3Body}</p>
+            </article>
+          </div>
+          <a class="btn btn-secondary" href="#" data-i18n="gateway.cta">{en.gateway.cta}</a>
+        </section>
+
+        <section class="section-card" aria-labelledby="media-title">
+          <h2 id="media-title" class="section-title" data-i18n="media.title">{en.media.title}</h2>
+          <div class="media-strip">
+            {mediaOutlets.map((outlet) => (
+              <span class="media-chip">{outlet}</span>
+            ))}
+          </div>
+        </section>
+
+        <section id="download" class="final-cta" aria-labelledby="download-title">
+          <h2 id="download-title" class="section-title" data-i18n="finalCta.title">{en.finalCta.title}</h2>
+          <p class="section-subtitle" data-i18n="finalCta.subtitle">{en.finalCta.subtitle}</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#" data-i18n="finalCta.button">{en.finalCta.button}</a>
+          </div>
+          <div class="app-stores" aria-label="App download stores">
+            <a class="store-btn" href="#" aria-label="Download from Apple App Store">Apple App Store</a>
+            <a class="store-btn" href="#" aria-label="Download from Google Play">Google Play</a>
+          </div>
+        </section>
+      </main>
+
+      <footer id="footer" class="site-footer">
+        <div class="container">
+          <div class="footer-grid">
+            <section class="footer-col">
+              <h4 data-i18n="footer.products">{en.footer.products}</h4>
+              <ul class="footer-links">
+                <li data-i18n="footer.ofwBanking">{en.footer.ofwBanking}</li>
+                <li data-i18n="footer.pesoRates">{en.footer.pesoRates}</li>
+                <li><a href="#" data-i18n="footer.sendUsToPh">{en.footer.sendUsToPh}</a></li>
+                <li><a href="#" data-i18n="footer.sendCaToPh">{en.footer.sendCaToPh}</a></li>
+                <li><a href="#" data-i18n="footer.sendUkToPh">{en.footer.sendUkToPh}</a></li>
+                <li><a href="#" data-i18n="footer.sendAeToPh">{en.footer.sendAeToPh}</a></li>
+              </ul>
+            </section>
+
+            <section class="footer-col">
+              <h4 data-i18n="footer.company">{en.footer.company}</h4>
+              <ul class="footer-links">
+                <li><a href="#" data-i18n="footer.billPayments">{en.footer.billPayments}</a></li>
+                <li><a href="#" data-i18n="footer.helpCenter">{en.footer.helpCenter}</a></li>
+                <li><a href="#" data-i18n="footer.roadmap">{en.footer.roadmap}</a></li>
+                <li><a href="#" data-i18n="footer.blog">{en.footer.blog}</a></li>
+              </ul>
+              <div class="socials" aria-label="Social media">
+                <a class="social" href="#" aria-label="Visit LinkedIn">in</a>
+                <a class="social" href="#" aria-label="Visit X">x</a>
+                <a class="social" href="#" aria-label="Visit Facebook">f</a>
+                <a class="social" href="#" aria-label="Visit Instagram">ig</a>
+              </div>
+            </section>
+
+            <section class="footer-col">
+              <h4 data-i18n="footer.resources">{en.footer.resources}</h4>
+              <label class="visually-hidden" for="liveCountries" data-i18n="footer.liveIn">{en.footer.liveIn}</label>
+              <select id="liveCountries" class="country-select">
+                <option>USA</option>
+                <option>UK</option>
+                <option>Canada</option>
+                <option>UAE</option>
+                <option>Singapore</option>
+                <option>Germany</option>
+              </select>
+              <p class="meta-line" data-i18n="footer.arrivingSoon">{en.footer.arrivingSoon}</p>
+              <div class="arriving-list" aria-label="Arriving soon countries">
+                <span>Australia</span>
+                <span>Japan</span>
+                <span>Qatar</span>
+              </div>
+            </section>
+          </div>
+
+          <p class="regulatory" data-i18n="footer.regulatory">{en.footer.regulatory}</p>
+        </div>
+      </footer>
+    </div>
+
+    <script
+      define:vars={{
+        translations,
+        competitorConfig,
+      }}
+    >
+      const STORAGE_KEY = "aspora-lang";
+      const fallbackRates = {
+        USD: 1,
+        CAD: 1.35,
+        GBP: 0.77,
+        EUR: 0.92,
+        SGD: 1.34,
+        AED: 3.67,
+        PHP: competitorConfig.midMarketFallback,
+      };
+
+      let currentLang = localStorage.getItem(STORAGE_KEY) || "en";
+      if (!translations[currentLang]) {
+        currentLang = "en";
+      }
+
+      const languageButtons = Array.from(document.querySelectorAll("[data-lang]"));
+      const amountInput = document.getElementById("sendAmount");
+      const sendCurrencyInput = document.getElementById("sendCurrency");
+      const receiveCurrencyInput = document.getElementById("receiveCurrency");
+      const transferFeeInput = document.getElementById("transferFee");
+      const recipientValue = document.getElementById("recipientValue");
+      const rateValue = document.getElementById("rateValue");
+      const feeValue = document.getElementById("feeValue");
+      const converterStatus = document.getElementById("converterStatus");
+      const referenceAmountText = document.getElementById("referenceAmountText");
+      const updatedAtText = document.getElementById("updatedAtText");
+      const testimonialTrack = document.getElementById("testimonialTrack");
+      const testimonialPrev = document.getElementById("testimonialPrev");
+      const testimonialNext = document.getElementById("testimonialNext");
+
+      const comparisonRows = competitorConfig.providers.map((provider) => ({
+        provider,
+        row: document.querySelector(`tr[data-provider="${provider.id}"]`),
+      }));
+
+      let rates = { ...fallbackRates };
+      let usdToPhp = competitorConfig.midMarketFallback;
+      let lastUpdatedAt = competitorConfig.asOf;
+
+      const localeForLanguage = () => (currentLang === "fil" ? "fil-PH" : "en-US");
+
+      const getNestedValue = (source, path) =>
+        path.split(".").reduce((accumulator, segment) => {
+          if (accumulator === undefined || accumulator === null) {
+            return undefined;
+          }
+
+          if (Array.isArray(accumulator) && /^\d+$/.test(segment)) {
+            return accumulator[Number(segment)];
+          }
+
+          return accumulator[segment];
+        }, source);
+
+      const t = (path) => {
+        const value = getNestedValue(translations[currentLang], path);
+        return typeof value === "string" ? value : path;
+      };
+
+      const formatCurrency = (value, currency) =>
+        new Intl.NumberFormat(localeForLanguage(), {
+          style: "currency",
+          currency,
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(value);
+
+      const formatRate = (value) =>
+        new Intl.NumberFormat(localeForLanguage(), {
+          minimumFractionDigits: 4,
+          maximumFractionDigits: 4,
+        }).format(value);
+
+      const formatDate = (value) => {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) {
+          return value;
+        }
+
+        return new Intl.DateTimeFormat(localeForLanguage(), {
+          dateStyle: "long",
+          timeStyle: "short",
+        }).format(date);
+      };
+
+      const convertRate = (fromCurrency, toCurrency) => {
+        const fromRate = rates[fromCurrency];
+        const toRate = rates[toCurrency];
+
+        if (!fromRate || !toRate) {
+          return null;
+        }
+
+        return toRate / fromRate;
+      };
+
+      const setLanguage = (nextLanguage) => {
+        if (!translations[nextLanguage]) {
+          return;
+        }
+
+        currentLang = nextLanguage;
+        localStorage.setItem(STORAGE_KEY, currentLang);
+        document.documentElement.lang = currentLang === "fil" ? "fil" : "en";
+
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.dataset.i18n;
+          if (!key) {
+            return;
+          }
+
+          const translatedText = getNestedValue(translations[currentLang], key);
+          if (typeof translatedText === "string") {
+            element.textContent = translatedText;
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+          const key = element.dataset.i18nAriaLabel;
+          if (!key) {
+            return;
+          }
+
+          const translatedText = getNestedValue(translations[currentLang], key);
+          if (typeof translatedText === "string") {
+            element.setAttribute("aria-label", translatedText);
+          }
+        });
+
+        languageButtons.forEach((button) => {
+          const isActive = button.dataset.lang === currentLang;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+
+        document.title = t("meta.title");
+        const descriptionTag = document.querySelector("meta[name='description']");
+        if (descriptionTag) {
+          descriptionTag.setAttribute("content", t("meta.description"));
+        }
+
+        updateConverter();
+        updateComparisonTable();
+      };
+
+      const updateConverter = () => {
+        const amount = Math.max(Number(amountInput.value) || 0, 0);
+        const transferFee = Math.max(Number(transferFeeInput.value) || 0, 0);
+        const sendCurrency = sendCurrencyInput.value;
+        const receiveCurrency = receiveCurrencyInput.value;
+
+        const routeRate = convertRate(sendCurrency, receiveCurrency) || usdToPhp;
+        const netAmount = Math.max(amount - transferFee, 0);
+        const recipientGets = netAmount * routeRate;
+        const feeInReceiveCurrency = transferFee * routeRate;
+
+        recipientValue.textContent = formatCurrency(recipientGets, receiveCurrency);
+        rateValue.textContent = `1 ${sendCurrency} = ${formatRate(routeRate)} ${receiveCurrency}`;
+        feeValue.textContent =
+          transferFee === 0
+            ? t("converter.noFee")
+            : `${formatCurrency(transferFee, sendCurrency)} (${formatCurrency(feeInReceiveCurrency, receiveCurrency)})`;
+      };
+
+      const updateComparisonTable = () => {
+        referenceAmountText.textContent = `${t("savings.reference")}: ${formatCurrency(competitorConfig.referenceSendAmount, "USD")}`;
+        updatedAtText.textContent = `${t("savings.updated")}: ${formatDate(lastUpdatedAt)}`;
+
+        comparisonRows.forEach(({ provider, row }) => {
+          if (!row) {
+            return;
+          }
+
+          const effectiveRate = usdToPhp * (1 - provider.marginPct / 100);
+          const recipientGets = Math.max((competitorConfig.referenceSendAmount - provider.feeUsd) * effectiveRate, 0);
+
+          const rateCell = row.querySelector('[data-cell="rate"]');
+          const feeCell = row.querySelector('[data-cell="fee"]');
+          const recipientCell = row.querySelector('[data-cell="recipient"]');
+
+          if (rateCell) {
+            rateCell.textContent = `${formatRate(effectiveRate)} PHP`;
+          }
+
+          if (feeCell) {
+            feeCell.textContent = provider.feeUsd === 0 ? t("converter.noFee") : formatCurrency(provider.feeUsd, "USD");
+          }
+
+          if (recipientCell) {
+            recipientCell.textContent = formatCurrency(recipientGets, "PHP");
+          }
+        });
+      };
+
+      const setStatus = (message) => {
+        converterStatus.textContent = message;
+      };
+
+      const fetchLiveRates = async () => {
+        setStatus(t("converter.loading"));
+
+        try {
+          const response = await fetch("/api/rates.json", {
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`Unexpected status ${response.status}`);
+          }
+
+          const payload = await response.json();
+          if (!payload?.rates?.PHP) {
+            throw new Error("Missing PHP rate");
+          }
+
+          rates = {
+            ...rates,
+            ...payload.rates,
+          };
+
+          const latestUsdToPhp = convertRate("USD", "PHP");
+          if (latestUsdToPhp) {
+            usdToPhp = latestUsdToPhp;
+          }
+
+          lastUpdatedAt = payload.updatedAt || new Date().toISOString();
+          setStatus(`${t("converter.updated")}: ${formatDate(lastUpdatedAt)}`);
+        } catch {
+          setStatus(t("converter.error"));
+        }
+
+        updateConverter();
+        updateComparisonTable();
+      };
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const language = button.dataset.lang;
+          if (language) {
+            setLanguage(language);
+          }
+        });
+      });
+
+      [amountInput, sendCurrencyInput, receiveCurrencyInput, transferFeeInput].forEach((element) => {
+        element.addEventListener("input", updateConverter);
+        element.addEventListener("change", updateConverter);
+      });
+
+      testimonialPrev?.addEventListener("click", () => {
+        testimonialTrack?.scrollBy({ left: -320, behavior: "smooth" });
+      });
+
+      testimonialNext?.addEventListener("click", () => {
+        testimonialTrack?.scrollBy({ left: 320, behavior: "smooth" });
+      });
+
+      setLanguage(currentLang);
+      updateConverter();
+      updateComparisonTable();
+      fetchLiveRates();
+    </script>
+  </body>
+</html>

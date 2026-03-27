@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Philippines flag">
+  <circle cx="32" cy="32" r="32" fill="#0038a8"/>
+  <clipPath id="clip-ph"><circle cx="32" cy="32" r="32"/></clipPath>
+  <g clip-path="url(#clip-ph)">
+    <rect x="0" y="32" width="64" height="32" fill="#ce1126"/>
+    <polygon points="0,0 0,64 36,32" fill="#fff"/>
+    <circle cx="12" cy="32" r="5" fill="#fcd116"/>
+  </g>
+</svg>

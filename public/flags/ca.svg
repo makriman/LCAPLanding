@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Canada flag">
+  <circle cx="32" cy="32" r="32" fill="#fff"/>
+  <clipPath id="clip-ca"><circle cx="32" cy="32" r="32"/></clipPath>
+  <g clip-path="url(#clip-ca)">
+    <rect x="0" y="0" width="16" height="64" fill="#d52b1e"/>
+    <rect x="48" y="0" width="16" height="64" fill="#d52b1e"/>
+    <polygon points="32,18 36,28 44,28 37,34 40,44 32,38 24,44 27,34 20,28 28,28" fill="#d52b1e"/>
+  </g>
+</svg>

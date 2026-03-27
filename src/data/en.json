@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Aspora Philippines | Global finance for global Filipinos",
+    "description": "Send, pay and save for loved ones in the Philippines with better rates, low fees, and secure global transfers."
+  },
+  "header": {
+    "logoTag": "Philippines",
+    "nav": {
+      "sendMoney": "Send money",
+      "billPay": "Bill payment",
+      "helpCenter": "Help center",
+      "roadmap": "Roadmap"
+    },
+    "language": {
+      "label": "Language",
+      "english": "English",
+      "filipino": "Filipino"
+    }
+  },
+  "hero": {
+    "eyebrow": "Built for OFWs and global Filipinos",
+    "title": "Global finance for global Filipinos",
+    "subtitle": "Support your loved ones in the Philippines with faster remittances, better FX rates, and transparent fees.",
+    "primaryCta": "Sign up & send",
+    "secondaryCta": "Download the app",
+    "points": {
+      "secure": "Secure",
+      "fast": "Lightning-fast",
+      "transparent": "No hidden fees"
+    }
+  },
+  "converter": {
+    "title": "Live remittance converter",
+    "sendAmount": "You send",
+    "sendCurrency": "From",
+    "receiveCurrency": "To",
+    "fee": "Transfer fee",
+    "recipientGets": "Recipient gets",
+    "rate": "Indicative FX rate",
+    "note": "Rates shown are indicative. Your final customer rate is confirmed before you send.",
+    "cta": "Sign up & send",
+    "loading": "Fetching latest rates...",
+    "error": "Could not fetch live rates. Showing fallback estimates.",
+    "updated": "Rate updated",
+    "noFee": "No fee"
+  },
+  "savings": {
+    "title": "Unlock savings with mid-market rates to the Philippines",
+    "subtitle": "Estimated comparison for a single transfer. Values are refreshed using live USD/PHP references and configurable provider margins.",
+    "reference": "Reference send amount",
+    "updated": "Last updated",
+    "headers": {
+      "provider": "Provider",
+      "rate": "Exchange rate",
+      "fee": "Transfer fee",
+      "recipient": "Recipient gets",
+      "delivery": "Delivery"
+    },
+    "footnote": "Fees, rates, and speed vary by channel, payment method, and promo eligibility. Use this table as a market snapshot.",
+    "sourceTitle": "Sources"
+  },
+  "stats": {
+    "title": "Trusted by Filipino families worldwide",
+    "transferredValue": "US$2Bn+",
+    "transferredLabel": "securely transferred worldwide",
+    "savedValue": "₱8.4Bn+",
+    "savedLabel": "estimated customer savings in FX and fees",
+    "countriesValue": "6",
+    "countriesLabel": "live send countries serving OFWs"
+  },
+  "testimonials": {
+    "title": "What OFWs say about Aspora",
+    "prev": "Previous testimonials",
+    "next": "Next testimonials",
+    "cards": [
+      {
+        "quote": "I switched because my family receives more pesos every month. Transfers land quickly and support is always responsive.",
+        "person": "Joanna R.",
+        "location": "Nurse, California to Pampanga"
+      },
+      {
+        "quote": "Finally a remittance app with clear pricing. No surprises, and my parents get updates in real-time.",
+        "person": "Mark D.",
+        "location": "Engineer, Toronto to Cebu"
+      },
+      {
+        "quote": "The recurring transfer setup is a game changer. Tuition payments are now on autopilot.",
+        "person": "Liza M.",
+        "location": "Caregiver, Dubai to Iloilo"
+      },
+      {
+        "quote": "Bank transfer and GCash payout both worked smoothly for my family. The app feels built for OFWs.",
+        "person": "Paolo S.",
+        "location": "Hospitality, London to Davao"
+      }
+    ]
+  },
+  "security": {
+    "title": "Security-first, always",
+    "point1": "Proactive fraud detection 24x7, with layered authentication and risk monitoring.",
+    "point2": "Customer funds safeguarded in segregated accounts with regulated financial institutions.",
+    "point3": "24x7 customer support via in-app chat, email, and phone."
+  },
+  "gateway": {
+    "badge": "Coming soon",
+    "title": "Your gateway to the Philippines: Send, Pay, Save.",
+    "feature1Title": "Save in multiple currencies",
+    "feature1Body": "Hold USD, EUR, or SGD and grow your savings with competitive annual yields.",
+    "feature2Title": "Pay bills automatically",
+    "feature2Body": "Schedule utilities, tuition, and government contribution payments in one workflow.",
+    "feature3Title": "Automate remittances",
+    "feature3Body": "Set recurring transfers for monthly support, investments, or emergency reserves.",
+    "cta": "See roadmap"
+  },
+  "media": {
+    "title": "As featured in"
+  },
+  "finalCta": {
+    "title": "Your world. Your money. Get the Aspora app.",
+    "subtitle": "Move money home in minutes with transparent pricing and OFW-first support.",
+    "button": "Download the app"
+  },
+  "footer": {
+    "products": "Products",
+    "company": "Company",
+    "resources": "Resources",
+    "ofwBanking": "OFW banking",
+    "pesoRates": "Peso rates",
+    "sendUsToPh": "Send money from USA to Philippines",
+    "sendCaToPh": "Send money from Canada to Philippines",
+    "sendUkToPh": "Send money from UK to Philippines",
+    "sendAeToPh": "Send money from UAE to Philippines",
+    "billPayments": "Bill payment",
+    "helpCenter": "Help center",
+    "roadmap": "Roadmap",
+    "blog": "OFW resources",
+    "liveIn": "Live in",
+    "arrivingSoon": "Arriving soon",
+    "regulatory": "Aspora Inc. is a U.S. money services business partner network. Philippine payouts are delivered through licensed banking and e-money partners supervised by the Bangko Sentral ng Pilipinas (BSP)."
+  }
+}

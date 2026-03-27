@@ -1,0 +1,106 @@
+{
+  "asOf": "2026-03-27",
+  "referenceSendAmount": 500,
+  "midMarketFallback": 56.2,
+  "providers": [
+    {
+      "id": "aspora",
+      "name": "Aspora",
+      "marginPct": 0.15,
+      "feeUsd": 0,
+      "delivery": "Minutes (bank or wallet)",
+      "sourceLabel": "Aspora product assumptions",
+      "sourceUrl": "https://aspora.com"
+    },
+    {
+      "id": "western-union",
+      "name": "Western Union",
+      "marginPct": 2.7,
+      "feeUsd": 0,
+      "delivery": "Minutes to 1 day",
+      "sourceLabel": "Western Union US to Philippines page",
+      "sourceUrl": "https://www.westernunion.com/us/en/send-money-to-philippines.html"
+    },
+    {
+      "id": "moneygram",
+      "name": "MoneyGram",
+      "marginPct": 2.6,
+      "feeUsd": 1.99,
+      "delivery": "Minutes (route dependent)",
+      "sourceLabel": "MoneyGram US to Philippines page",
+      "sourceUrl": "https://www.moneygram.com/us/en/send-money-us-to-philippines"
+    },
+    {
+      "id": "bdo-remit",
+      "name": "BDO Remit",
+      "marginPct": 3.4,
+      "feeUsd": 10,
+      "delivery": "1 to 4 banking days",
+      "sourceLabel": "BDO remittance channels",
+      "sourceUrl": "https://www.bdo.com.ph/bdonetworkbank/remittance"
+    },
+    {
+      "id": "unionbank",
+      "name": "UnionBank",
+      "marginPct": 3.2,
+      "feeUsd": 10,
+      "delivery": "1 to 3 banking days",
+      "sourceLabel": "UnionBank inward remittance (SWIFT route)",
+      "sourceUrl": "https://www.unionbankph.com"
+    },
+    {
+      "id": "coins-ph",
+      "name": "Coins.ph",
+      "marginPct": 2.1,
+      "feeUsd": 1,
+      "delivery": "Near real-time to wallet",
+      "sourceLabel": "Coins.ph remittance help center",
+      "sourceUrl": "https://support.coins.ph/hc/en-us/articles/39427634445849-Cash-Out-from-Coins-ph-via-Remittance-Centers"
+    },
+    {
+      "id": "gcash",
+      "name": "GCash",
+      "marginPct": 1.9,
+      "feeUsd": 0,
+      "delivery": "Up to 2 business days",
+      "sourceLabel": "GCash remittance partner documentation",
+      "sourceUrl": "https://help.gcash.com/hc/en-us/articles/40230536902809-I-cashed-in-using-a-global-bank-partner-or-international-remittance-but-I-didn-t-receive-the-money-What-do-I-do"
+    },
+    {
+      "id": "maya",
+      "name": "Maya",
+      "marginPct": 2,
+      "feeUsd": 0,
+      "delivery": "Minutes to 24 hours",
+      "sourceLabel": "Maya international remittance guide",
+      "sourceUrl": "https://www.maya.ph/international-remittances/western-union"
+    },
+    {
+      "id": "wise",
+      "name": "Wise",
+      "marginPct": 0,
+      "feeUsd": 8.27,
+      "delivery": "Within 1 day",
+      "sourceLabel": "Wise USD to PHP comparison",
+      "sourceUrl": "https://wise.com/us/compare/wise-usd-to-php"
+    },
+    {
+      "id": "remitly",
+      "name": "Remitly",
+      "marginPct": 1.4,
+      "feeUsd": 0,
+      "delivery": "Minutes to 1 day",
+      "sourceLabel": "Remitly US to Philippines pricing",
+      "sourceUrl": "https://www.remitly.com/us/en/philippines/pricing"
+    },
+    {
+      "id": "worldremit",
+      "name": "WorldRemit",
+      "marginPct": 2.2,
+      "feeUsd": 2.99,
+      "delivery": "Minutes to 1 day",
+      "sourceLabel": "WorldRemit Philippines page",
+      "sourceUrl": "https://www.worldremit.com/en/philippines"
+    }
+  ]
+}

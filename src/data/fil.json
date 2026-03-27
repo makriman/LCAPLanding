@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "title": "Aspora Philippines | Pandaigdigang pananalapi para sa pandaigdigang Pilipino",
+    "description": "Magpadala, magbayad, at mag-ipon para sa pamilya sa Pilipinas gamit ang mas magandang rate, mababang bayarin, at ligtas na remittance."
+  },
+  "header": {
+    "logoTag": "Pilipinas",
+    "nav": {
+      "sendMoney": "Magpadala",
+      "billPay": "Bayad-bills",
+      "helpCenter": "Sentro ng tulong",
+      "roadmap": "Roadmap"
+    },
+    "language": {
+      "label": "Wika",
+      "english": "Ingles",
+      "filipino": "Filipino"
+    }
+  },
+  "hero": {
+    "eyebrow": "Ginawa para sa OFW at pandaigdigang Pilipino",
+    "title": "Pandaigdigang pananalapi para sa pandaigdigang Pilipino",
+    "subtitle": "Suportahan ang pamilya sa Pilipinas gamit ang mas mabilis na remittance, mas magandang palitan, at malinaw na bayarin.",
+    "primaryCta": "Mag-sign up at magpadala",
+    "secondaryCta": "I-download ang app",
+    "points": {
+      "secure": "Ligtas",
+      "fast": "Mabilis",
+      "transparent": "Walang tagong bayarin"
+    }
+  },
+  "converter": {
+    "title": "Live remittance converter",
+    "sendAmount": "Ipinapadala mo",
+    "sendCurrency": "Mula",
+    "receiveCurrency": "Papunta",
+    "fee": "Bayad sa transfer",
+    "recipientGets": "Matatanggap ng tatanggap",
+    "rate": "Tantyang FX rate",
+    "note": "Tantya lamang ang rate. Makikita ang final rate bago mo kumpirmahin ang padala.",
+    "cta": "Mag-sign up at magpadala",
+    "loading": "Kumukuha ng pinakabagong rate...",
+    "error": "Hindi makuha ang live rate. Fallback estimate muna ang ipinapakita.",
+    "updated": "Huling update ng rate",
+    "noFee": "Walang bayad"
+  },
+  "savings": {
+    "title": "Mas malaking tipid gamit ang mid-market rates papuntang Pilipinas",
+    "subtitle": "Tantyang paghahambing para sa isang transfer. Ina-update gamit ang live USD/PHP reference at configurable na margin bawat provider.",
+    "reference": "Halimbawang halaga ng padala",
+    "updated": "Huling update",
+    "headers": {
+      "provider": "Provider",
+      "rate": "Palitan",
+      "fee": "Bayad sa transfer",
+      "recipient": "Matatanggap",
+      "delivery": "Dating ng padala"
+    },
+    "footnote": "Nag-iiba ang bayad, rate, at bilis depende sa channel, payment method, at promo. Gamitin ito bilang market snapshot.",
+    "sourceTitle": "Mga sanggunian"
+  },
+  "stats": {
+    "title": "Pinagkakatiwalaan ng mga pamilyang Pilipino sa buong mundo",
+    "transferredValue": "US$2Bn+",
+    "transferredLabel": "ligtas na nailipat sa buong mundo",
+    "savedValue": "₱8.4Bn+",
+    "savedLabel": "tantyang natipid ng customers sa FX at bayarin",
+    "countriesValue": "6",
+    "countriesLabel": "live send countries para sa OFWs"
+  },
+  "testimonials": {
+    "title": "Sabi ng mga OFW tungkol sa Aspora",
+    "prev": "Nakaraang testimonials",
+    "next": "Susunod na testimonials",
+    "cards": [
+      {
+        "quote": "Lumipat ako dahil mas maraming piso ang natatanggap ng pamilya ko buwan-buwan. Mabilis ang transfer at maayos ang support.",
+        "person": "Joanna R.",
+        "location": "Nurse, California to Pampanga"
+      },
+      {
+        "quote": "Sa wakas, remittance app na malinaw ang presyo. Walang sorpresa at may real-time updates ang magulang ko.",
+        "person": "Mark D.",
+        "location": "Engineer, Toronto to Cebu"
+      },
+      {
+        "quote": "Game changer ang recurring transfer. Naka-autopilot na ang tuition payments namin.",
+        "person": "Liza M.",
+        "location": "Caregiver, Dubai to Iloilo"
+      },
+      {
+        "quote": "Smooth ang bank transfer at GCash payout para sa pamilya ko. Ramdam na para talaga sa OFW ang app.",
+        "person": "Paolo S.",
+        "location": "Hospitality, London to Davao"
+      }
+    ]
+  },
+  "security": {
+    "title": "Seguridad muna, palagi",
+    "point1": "Proactive fraud detection 24x7, may layered authentication at risk monitoring.",
+    "point2": "Pinoprotektahan ang customer funds sa segregated accounts sa regulated financial institutions.",
+    "point3": "24x7 customer support sa in-app chat, email, at telepono."
+  },
+  "gateway": {
+    "badge": "Malapit na",
+    "title": "Ang gateway mo sa Pilipinas: Magpadala, Magbayad, Mag-ipon.",
+    "feature1Title": "Mag-ipon sa maraming currency",
+    "feature1Body": "Mag-hold ng USD, EUR, o SGD at palaguin ang ipon sa competitive annual yields.",
+    "feature2Title": "Awtomatikong bayad-bills",
+    "feature2Body": "I-schedule ang utilities, tuition, at government contributions sa iisang workflow.",
+    "feature3Title": "I-automate ang remittance",
+    "feature3Body": "Mag-set ng recurring transfer para sa buwanang suporta, investments, o emergency reserve.",
+    "cta": "Tingnan ang roadmap"
+  },
+  "media": {
+    "title": "Na-feature sa"
+  },
+  "finalCta": {
+    "title": "Iyong mundo. Iyong pera. Kunin ang Aspora app.",
+    "subtitle": "Magpadala pauwi sa loob ng ilang minuto gamit ang malinaw na presyo at OFW-first support.",
+    "button": "I-download ang app"
+  },
+  "footer": {
+    "products": "Mga produkto",
+    "company": "Kumpanya",
+    "resources": "Mga resource",
+    "ofwBanking": "OFW banking",
+    "pesoRates": "Peso rates",
+    "sendUsToPh": "Magpadala mula USA papuntang Pilipinas",
+    "sendCaToPh": "Magpadala mula Canada papuntang Pilipinas",
+    "sendUkToPh": "Magpadala mula UK papuntang Pilipinas",
+    "sendAeToPh": "Magpadala mula UAE papuntang Pilipinas",
+    "billPayments": "Bayad-bills",
+    "helpCenter": "Sentro ng tulong",
+    "roadmap": "Roadmap",
+    "blog": "OFW resources",
+    "liveIn": "Live sa",
+    "arrivingSoon": "Malapit na",
+    "regulatory": "Ang Aspora Inc. ay bahagi ng U.S. money services business partner network. Ang payouts sa Pilipinas ay idinadaan sa licensed banking at e-money partners na pinangangasiwaan ng Bangko Sentral ng Pilipinas (BSP)."
+  }
+}
