@@ -441,6 +441,209 @@ main {
   margin: 0;
 }
 
+/* Hero + converter (pixel-match block from provided reference) */
+.hero.section-card {
+  background: #e6e6e8;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  gap: 76px;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
+  padding: 72px 86px 64px;
+}
+
+.hero-copy {
+  gap: 28px;
+  max-width: 660px;
+}
+
+.hero h1 {
+  color: #07080b;
+  font-family: var(--font-headline);
+  font-size: clamp(3.4rem, 6.3vw, 5.3rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.hero p {
+  color: #565656;
+  font-size: clamp(1.12rem, 1.6vw, 2rem);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 40ch;
+}
+
+.hero .hero-actions {
+  margin-top: 2px;
+}
+
+.hero .btn-primary {
+  background: #5b2abf;
+  border-radius: 999px;
+  box-shadow: none;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  min-height: 60px;
+  min-width: 170px;
+  padding: 0 32px;
+}
+
+.hero .btn-primary:hover,
+.hero .btn-primary:focus-visible {
+  transform: translateY(0);
+}
+
+.hero .converter {
+  background: #371183;
+  border: 8px solid #e45ad8;
+  border-radius: 28px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  justify-self: end;
+  max-width: 540px;
+  padding: 42px 40px 34px;
+  width: 100%;
+}
+
+.converter-group {
+  display: grid;
+  gap: 14px;
+}
+
+.converter-kicker {
+  color: #b2a4db;
+  font-size: 1.03rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.converter-row {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.converter-amount-input {
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+  font: inherit;
+  font-size: 3.02rem;
+  font-weight: 700;
+  line-height: 1;
+  min-width: 0;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+.converter-amount-input::-webkit-outer-spin-button,
+.converter-amount-input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.currency-chip {
+  align-items: center;
+  color: #ffffff;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  gap: 8px;
+  line-height: 1;
+}
+
+.currency-chip .flag {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  height: 24px;
+  width: 24px;
+}
+
+.currency-select-chip {
+  position: relative;
+}
+
+.currency-select-chip::after {
+  color: #ffffff;
+  content: "⌄";
+  font-size: 1.85rem;
+  margin-top: -4px;
+}
+
+.converter-currency-select {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 2rem;
+  min-width: 86px;
+  outline: none;
+  padding-right: 6px;
+}
+
+.converter-divider {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  height: 1px;
+  width: 100%;
+}
+
+.live-rate {
+  color: #f4f5ff;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.live-rate::before {
+  color: #80fb9f;
+  content: "↕ ";
+  font-weight: 700;
+}
+
+.promo-pill {
+  background: #90ef90;
+  border-radius: 10px;
+  color: #0d2c19;
+  display: inline-flex;
+  font-size: 0.97rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 6px 12px;
+  width: fit-content;
+}
+
+.converter-group-receive {
+  gap: 16px;
+}
+
+.recipient-amount {
+  color: #ffffff;
+  font-size: 3.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.converter-hidden-field {
+  border: 0;
+  height: 0;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 0;
+}
+
 .section-title {
   font-family: var(--font-headline);
   font-size: clamp(1.6rem, 3vw, 2.3rem);
@@ -883,6 +1086,16 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .hero.section-card {
+    gap: 34px;
+    padding: 42px 34px;
+  }
+
+  .hero .converter {
+    justify-self: stretch;
+    max-width: 100%;
+  }
+
   .stats-grid,
   .security-grid,
   .gateway-grid,
@@ -908,8 +1121,56 @@ main {
     padding: 20px;
   }
 
+  .hero.section-card {
+    padding: 30px 22px;
+  }
+
   .hero h1 {
-    font-size: clamp(2.05rem, 8vw, 3rem);
+    font-size: clamp(2.45rem, 12vw, 3.2rem);
+  }
+
+  .hero p {
+    font-size: 1.05rem;
+  }
+
+  .hero .btn-primary {
+    font-size: 1.2rem;
+    min-height: 52px;
+    min-width: 148px;
+    padding: 0 24px;
+  }
+
+  .hero .converter {
+    border-width: 5px;
+    border-radius: 22px;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+
+  .converter-kicker {
+    font-size: 0.98rem;
+  }
+
+  .converter-amount-input,
+  .recipient-amount {
+    font-size: 2.1rem;
+  }
+
+  .currency-chip,
+  .converter-currency-select {
+    font-size: 1.25rem;
+  }
+
+  .currency-select-chip::after {
+    font-size: 1.3rem;
+  }
+
+  .live-rate {
+    font-size: 0.95rem;
+  }
+
+  .promo-pill {
+    font-size: 0.88rem;
   }
 
   .form-grid {

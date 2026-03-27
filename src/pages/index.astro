@@ -69,80 +69,54 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
       <main class="container">
         <section id="hero" class="section-card hero" aria-labelledby="hero-title">
           <div class="hero-copy">
-            <span class="eyebrow" data-i18n="hero.eyebrow">{en.hero.eyebrow}</span>
             <h1 id="hero-title" data-i18n="hero.title">{en.hero.title}</h1>
             <p data-i18n="hero.subtitle">{en.hero.subtitle}</p>
 
-            <div class="peso-visual" aria-hidden="true">
-              <div class="phone-frame">
-                <span class="peso-main">₱</span>
-                <span class="peso-float peso-float-a">₱</span>
-                <span class="peso-float peso-float-b">₱</span>
-              </div>
-              <span class="coin coin-a"></span>
-              <span class="coin coin-b"></span>
-            </div>
-
             <div class="hero-actions">
               <a class="btn btn-primary" href="#converter" data-i18n="hero.primaryCta">{en.hero.primaryCta}</a>
-              <a class="btn btn-secondary" href="#download" data-i18n="hero.secondaryCta">{en.hero.secondaryCta}</a>
             </div>
-
-            <ul class="point-list" aria-label="Key selling points">
-              <li>
-                <span class="point-dot" aria-hidden="true"></span>
-                <span data-i18n="hero.points.secure">{en.hero.points.secure}</span>
-              </li>
-              <li>
-                <span class="point-dot" aria-hidden="true"></span>
-                <span data-i18n="hero.points.fast">{en.hero.points.fast}</span>
-              </li>
-              <li>
-                <span class="point-dot" aria-hidden="true"></span>
-                <span data-i18n="hero.points.transparent">{en.hero.points.transparent}</span>
-              </li>
-            </ul>
           </div>
 
           <div class="converter" id="converter" aria-label="Currency converter">
-            <h2 data-i18n="converter.title">{en.converter.title}</h2>
-
-            <div class="form-grid">
-              <div class="form-field form-field-wide">
-                <label for="sendAmount" data-i18n="converter.sendAmount">{en.converter.sendAmount}</label>
-                <input class="input" id="sendAmount" type="number" min="0" step="0.01" value="500" inputmode="decimal" />
+            <div class="converter-group">
+              <p class="converter-kicker" data-i18n="converter.sendAmount">{en.converter.sendAmount}</p>
+              <div class="converter-row">
+                <input class="converter-amount-input" id="sendAmount" type="number" min="0" step="0.01" value="100" inputmode="decimal" />
+                <label class="currency-chip currency-select-chip" for="sendCurrency">
+                  <img id="sendFlag" class="flag" src="/flags/gb.svg" alt="" aria-hidden="true" />
+                  <select class="converter-currency-select" id="sendCurrency" data-i18n-aria-label="converter.sendCurrency">
+                    {sendCurrencies.map((currency) => (
+                      <option value={currency} selected={currency === "GBP"}>
+                        {currency}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
-
-              <div class="form-field">
-                <label for="sendCurrency" data-i18n="converter.sendCurrency">{en.converter.sendCurrency}</label>
-                <select class="select" id="sendCurrency">
-                  {sendCurrencies.map((currency) => <option value={currency}>{currency}</option>)}
-                </select>
-              </div>
-
-              <div class="form-field">
-                <label for="receiveCurrency" data-i18n="converter.receiveCurrency">{en.converter.receiveCurrency}</label>
-                <select class="select" id="receiveCurrency">
-                  {receiveCurrencies.map((currency) => <option value={currency}>{currency}</option>)}
-                </select>
-              </div>
-
-              <div class="form-field form-field-wide">
-                <label for="transferFee" data-i18n="converter.fee">{en.converter.fee}</label>
-                <input class="input" id="transferFee" type="number" min="0" step="0.01" value="0" inputmode="decimal" />
-              </div>
+              <div class="converter-divider"></div>
+              <p id="rateValue" class="live-rate">{en.converter.liveRatePrefix}: 1 GBP = ₱72.10</p>
+              <p id="feeValue" class="promo-pill" data-i18n="converter.promo">{en.converter.promo}</p>
             </div>
 
-            <div class="result-panel" aria-live="polite">
-              <span class="label" data-i18n="converter.recipientGets">{en.converter.recipientGets}</span>
-              <strong id="recipientValue">₱28,100.00</strong>
-              <span id="rateValue" class="meta-line">1 USD = 56.2000 PHP</span>
-              <span id="feeValue" class="meta-line">{en.converter.noFee}</span>
+            <div class="converter-group converter-group-receive" aria-live="polite">
+              <p class="converter-kicker" data-i18n="converter.recipientGets">{en.converter.recipientGets}</p>
+              <div class="converter-row">
+                <strong id="recipientValue" class="recipient-amount">₱7,210.00</strong>
+                <span class="currency-chip">
+                  <img class="flag" src="/flags/ph.svg" alt="" aria-hidden="true" />
+                  <span>PHP</span>
+                </span>
+              </div>
+              <div class="converter-divider"></div>
             </div>
 
-            <p class="notice" id="converterStatus" data-i18n="converter.loading">{en.converter.loading}</p>
-            <p class="notice" data-i18n="converter.note">{en.converter.note}</p>
-            <a class="btn btn-primary" href="#download" data-i18n="converter.cta">{en.converter.cta}</a>
+            <select class="converter-hidden-field" id="receiveCurrency" aria-hidden="true" tabindex="-1">
+              {receiveCurrencies.map((currency) => (
+                <option value={currency}>{currency}</option>
+              ))}
+            </select>
+            <input class="converter-hidden-field" id="transferFee" type="number" min="0" step="0.01" value="0" aria-hidden="true" tabindex="-1" />
+            <p class="visually-hidden" id="converterStatus" data-i18n="converter.loading">{en.converter.loading}</p>
           </div>
         </section>
 
@@ -414,6 +388,7 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
       const recipientValue = document.getElementById("recipientValue");
       const rateValue = document.getElementById("rateValue");
       const feeValue = document.getElementById("feeValue");
+      const sendFlag = document.getElementById("sendFlag");
       const converterStatus = document.getElementById("converterStatus");
       const referenceAmountText = document.getElementById("referenceAmountText");
       const updatedAtText = document.getElementById("updatedAtText");
@@ -425,6 +400,14 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
         provider,
         row: document.querySelector(`tr[data-provider="${provider.id}"]`),
       }));
+      const sendCurrencyFlags = {
+        USD: "/flags/us.svg",
+        CAD: "/flags/ca.svg",
+        GBP: "/flags/gb.svg",
+        EUR: "/flags/eu.svg",
+        SGD: "/flags/sg.svg",
+        AED: "/flags/ae.svg",
+      };
 
       let rates = { ...fallbackRates };
       let usdToPhp = competitorConfig.midMarketFallback;
@@ -548,11 +531,15 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
         const feeInReceiveCurrency = transferFee * routeRate;
 
         recipientValue.textContent = formatCurrency(recipientGets, receiveCurrency);
-        rateValue.textContent = `1 ${sendCurrency} = ${formatRate(routeRate)} ${receiveCurrency}`;
+        rateValue.textContent = `${t("converter.liveRatePrefix")}: 1 ${sendCurrency} = ${formatCurrency(routeRate, receiveCurrency)}`;
         feeValue.textContent =
           transferFee === 0
-            ? t("converter.noFee")
+            ? t("converter.promo")
             : `${formatCurrency(transferFee, sendCurrency)} (${formatCurrency(feeInReceiveCurrency, receiveCurrency)})`;
+
+        if (sendFlag instanceof HTMLImageElement) {
+          sendFlag.src = sendCurrencyFlags[sendCurrency] || "/flags/us.svg";
+        }
       };
 
       const updateComparisonTable = () => {

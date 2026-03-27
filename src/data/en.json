@@ -20,8 +20,8 @@
   "hero": {
     "eyebrow": "Built for OFWs and global Filipinos",
     "title": "Global finance for global Filipinos",
-    "subtitle": "Support your loved ones in the Philippines with faster remittances, better FX rates, and transparent fees.",
-    "primaryCta": "Sign up & send",
+    "subtitle": "Secure, lightning fast transfers at guaranteed Google rates.",
+    "primaryCta": "Send money",
     "secondaryCta": "Download the app",
     "points": {
       "secure": "Secure",
@@ -31,13 +31,15 @@
   },
   "converter": {
     "title": "Live remittance converter",
-    "sendAmount": "You send",
+    "sendAmount": "You Send",
     "sendCurrency": "From",
     "receiveCurrency": "To",
     "fee": "Transfer fee",
-    "recipientGets": "Recipient gets",
+    "recipientGets": "They receive",
     "rate": "Indicative FX rate",
     "note": "Rates shown are indicative. Your final customer rate is confirmed before you send.",
+    "liveRatePrefix": "Live Google rate",
+    "promo": "Zero fee for first transfer",
     "cta": "Sign up & send",
     "loading": "Fetching latest rates...",
     "error": "Could not fetch live rates. Showing fallback estimates.",

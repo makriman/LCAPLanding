@@ -20,8 +20,8 @@
   "hero": {
     "eyebrow": "Ginawa para sa OFW at pandaigdigang Pilipino",
     "title": "Pandaigdigang pananalapi para sa pandaigdigang Pilipino",
-    "subtitle": "Suportahan ang pamilya sa Pilipinas gamit ang mas mabilis na remittance, mas magandang palitan, at malinaw na bayarin.",
-    "primaryCta": "Mag-sign up at magpadala",
+    "subtitle": "Ligtas at napakabilis na padala gamit ang garantisadong Google rates.",
+    "primaryCta": "Magpadala",
     "secondaryCta": "I-download ang app",
     "points": {
       "secure": "Ligtas",
@@ -31,13 +31,15 @@
   },
   "converter": {
     "title": "Live remittance converter",
-    "sendAmount": "Ipinapadala mo",
+    "sendAmount": "Ipinapadala Mo",
     "sendCurrency": "Mula",
     "receiveCurrency": "Papunta",
     "fee": "Bayad sa transfer",
-    "recipientGets": "Matatanggap ng tatanggap",
+    "recipientGets": "Matatanggap Nila",
     "rate": "Tantyang FX rate",
     "note": "Tantya lamang ang rate. Makikita ang final rate bago mo kumpirmahin ang padala.",
+    "liveRatePrefix": "Live Google rate",
+    "promo": "Zero fee sa unang transfer",
     "cta": "Mag-sign up at magpadala",
     "loading": "Kumukuha ng pinakabagong rate...",
     "error": "Hindi makuha ang live rate. Fallback estimate muna ang ipinapakita.",
