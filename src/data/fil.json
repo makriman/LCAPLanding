@@ -6,10 +6,10 @@
   "header": {
     "logoTag": "Pilipinas",
     "nav": {
-      "sendMoney": "Magpadala",
-      "billPay": "Bayad-bills",
-      "helpCenter": "Sentro ng tulong",
-      "roadmap": "Roadmap"
+      "sendMoney": "OFW banking",
+      "billPay": "Tungkol sa amin",
+      "helpCenter": "Careers",
+      "roadmap": "Blog"
     },
     "language": {
       "label": "Wika",
@@ -23,6 +23,12 @@
     "subtitle": "Ligtas at napakabilis na padala gamit ang garantisadong Google rates.",
     "primaryCta": "Magpadala",
     "secondaryCta": "I-download ang app",
+    "ticker": {
+      "item1": "24x7 live customer support",
+      "item2": "256-bit encryption sa lahat ng transfer",
+      "item3": "Walang nakatagong bayarin",
+      "item4": "24x7"
+    },
     "points": {
       "secure": "Ligtas",
       "fast": "Mabilis",
@@ -47,8 +53,8 @@
     "noFee": "Walang bayad"
   },
   "savings": {
-    "title": "Mas malaking tipid gamit ang mid-market rates papuntang Pilipinas",
-    "subtitle": "Tantyang paghahambing para sa isang transfer. Ina-update gamit ang live USD/PHP reference at configurable na margin bawat provider.",
+    "title": "Mas malaking tipid gamit ang Google rates papuntang Pilipinas",
+    "subtitle": "Narito kung magkano ang US$500 gamit ang Aspora",
     "reference": "Halimbawang halaga ng padala",
     "updated": "Huling update",
     "headers": {
@@ -72,6 +78,7 @@
   },
   "testimonials": {
     "title": "Sabi ng mga OFW tungkol sa Aspora",
+    "subtitle": "Para sa maayos at ligtas na transfers",
     "prev": "Nakaraang testimonials",
     "next": "Susunod na testimonials",
     "cards": [
@@ -99,6 +106,9 @@
   },
   "security": {
     "title": "Seguridad muna, palagi",
+    "alwaysTitle": "Palagi.",
+    "alwaysSubtitle": "Pinoprotektahan ang pera mo sa bawat hakbang",
+    "support": "24x7 Customer support",
     "point1": "Proactive fraud detection 24x7, may layered authentication at risk monitoring.",
     "point2": "Pinoprotektahan ang customer funds sa segregated accounts sa regulated financial institutions.",
     "point3": "24x7 customer support sa in-app chat, email, at telepono."

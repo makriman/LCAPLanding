@@ -29,7 +29,7 @@ const testimonialFlagPairs = [
   { from: "/flags/gb.svg", to: "/flags/ph.svg" },
 ];
 
-const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News", "BusinessWorld"];
+const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
 ---
 
 <!doctype html>
@@ -59,9 +59,14 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
             <a href="#gateway" data-i18n="header.nav.roadmap">{en.header.nav.roadmap}</a>
           </nav>
 
-          <div class="language-switch" aria-label={en.header.language.label} data-i18n-aria-label="header.language.label">
-            <button type="button" data-lang="en" data-i18n="header.language.english">{en.header.language.english}</button>
-            <button type="button" data-lang="fil" data-i18n="header.language.filipino">{en.header.language.filipino}</button>
+          <div class="header-right">
+            <div class="language-switch" aria-label={en.header.language.label} data-i18n-aria-label="header.language.label">
+              <button type="button" data-lang="en" data-i18n="header.language.english">{en.header.language.english}</button>
+              <button type="button" data-lang="fil" data-i18n="header.language.filipino">{en.header.language.filipino}</button>
+            </div>
+            <a class="header-download-btn" href="#download" data-i18n="finalCta.button">
+              {en.finalCta.button}
+            </a>
           </div>
         </div>
       </header>
@@ -120,7 +125,14 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
           </div>
         </section>
 
-        <section class="section-card" aria-labelledby="savings-title">
+        <section class="trust-ticker" aria-label="Trust highlights">
+          <span data-i18n="hero.ticker.item1">{en.hero.ticker.item1}</span>
+          <span data-i18n="hero.ticker.item2">{en.hero.ticker.item2}</span>
+          <span data-i18n="hero.ticker.item3">{en.hero.ticker.item3}</span>
+          <span data-i18n="hero.ticker.item4">{en.hero.ticker.item4}</span>
+        </section>
+
+        <section class="section-card savings-section" aria-labelledby="savings-title">
           <h2 id="savings-title" class="section-title" data-i18n="savings.title">{en.savings.title}</h2>
           <p class="section-subtitle" data-i18n="savings.subtitle">{en.savings.subtitle}</p>
 
@@ -177,8 +189,7 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
           </ol>
         </section>
 
-        <section class="section-card" aria-labelledby="stats-title">
-          <h2 id="stats-title" class="section-title" data-i18n="stats.title">{en.stats.title}</h2>
+        <section class="section-card stats-strip" aria-label={en.stats.title}>
           <div class="stats-grid">
             <article class="stat-card">
               <strong data-i18n="stats.transferredValue">{en.stats.transferredValue}</strong>
@@ -195,7 +206,7 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
           </div>
         </section>
 
-        <section class="section-card" aria-labelledby="testimonial-title">
+        <section class="section-card testimonials-section" aria-labelledby="testimonial-title">
           <div class="testimonial-header">
             <h2 id="testimonial-title" class="section-title" data-i18n="testimonials.title">{en.testimonials.title}</h2>
             <div class="carousel-controls">
@@ -219,6 +230,7 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
               </button>
             </div>
           </div>
+          <p class="testimonials-subtitle" data-i18n="testimonials.subtitle">{en.testimonials.subtitle}</p>
 
           <div id="testimonialTrack" class="testimonial-track">
             {en.testimonials.cards.map((card, index) => (
@@ -239,48 +251,42 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
           </div>
         </section>
 
-        <section class="section-card" aria-labelledby="security-title">
-          <h2 id="security-title" class="section-title" data-i18n="security.title">{en.security.title}</h2>
-          <div class="security-grid">
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">24</span>
-              <p data-i18n="security.point1">{en.security.point1}</p>
-            </article>
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">S</span>
-              <p data-i18n="security.point2">{en.security.point2}</p>
-            </article>
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">CS</span>
-              <p data-i18n="security.point3">{en.security.point3}</p>
-            </article>
+        <section class="section-card always-section" aria-labelledby="always-title">
+          <div class="always-head">
+            <div>
+              <h2 id="always-title" class="section-title" data-i18n="security.alwaysTitle">{en.security.alwaysTitle}</h2>
+              <p class="always-subtitle" data-i18n="security.alwaysSubtitle">{en.security.alwaysSubtitle}</p>
+            </div>
+            <div class="support-chip">
+              <span class="support-icon" aria-hidden="true">✓</span>
+              <span data-i18n="security.support">{en.security.support}</span>
+            </div>
+          </div>
+          <div class="always-points">
+            <p data-i18n="security.point1">{en.security.point1}</p>
+            <p data-i18n="security.point2">{en.security.point2}</p>
+            <p data-i18n="security.point3">{en.security.point3}</p>
           </div>
         </section>
 
-        <section id="gateway" class="section-card" aria-labelledby="gateway-title">
-          <span class="badge" data-i18n="gateway.badge">{en.gateway.badge}</span>
-          <h2 id="gateway-title" class="section-title" data-i18n="gateway.title">{en.gateway.title}</h2>
-          <div class="gateway-grid">
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">FX</span>
-              <h3 data-i18n="gateway.feature1Title">{en.gateway.feature1Title}</h3>
-              <p data-i18n="gateway.feature1Body">{en.gateway.feature1Body}</p>
-            </article>
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">BP</span>
-              <h3 data-i18n="gateway.feature2Title">{en.gateway.feature2Title}</h3>
-              <p data-i18n="gateway.feature2Body">{en.gateway.feature2Body}</p>
-            </article>
-            <article class="feature-card">
-              <span class="icon-square" aria-hidden="true">AR</span>
-              <h3 data-i18n="gateway.feature3Title">{en.gateway.feature3Title}</h3>
-              <p data-i18n="gateway.feature3Body">{en.gateway.feature3Body}</p>
-            </article>
+        <section id="gateway" class="section-card gateway-section" aria-labelledby="gateway-title">
+          <div class="gateway-visual" aria-hidden="true">
+            <div class="gateway-shape"></div>
+            <div class="gateway-person">OFW</div>
           </div>
-          <a class="btn btn-secondary" href="#" data-i18n="gateway.cta">{en.gateway.cta}</a>
+          <div class="gateway-copy">
+            <span class="badge" data-i18n="gateway.badge">{en.gateway.badge}</span>
+            <h2 id="gateway-title" class="section-title" data-i18n="gateway.title">{en.gateway.title}</h2>
+            <ul class="gateway-bullets">
+              <li data-i18n="gateway.feature1Body">{en.gateway.feature1Body}</li>
+              <li data-i18n="gateway.feature2Body">{en.gateway.feature2Body}</li>
+              <li data-i18n="gateway.feature3Body">{en.gateway.feature3Body}</li>
+            </ul>
+            <a class="btn btn-primary gateway-cta" href="#" data-i18n="gateway.cta">{en.gateway.cta}</a>
+          </div>
         </section>
 
-        <section class="section-card" aria-labelledby="media-title">
+        <section class="section-card media-section" aria-labelledby="media-title">
           <h2 id="media-title" class="section-title" data-i18n="media.title">{en.media.title}</h2>
           <div class="media-strip">
             {mediaOutlets.map((outlet) => (
@@ -288,6 +294,8 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
             ))}
           </div>
         </section>
+
+        <section class="purple-band" aria-hidden="true"></section>
 
         <section id="download" class="final-cta" aria-labelledby="download-title">
           <h2 id="download-title" class="section-title" data-i18n="finalCta.title">{en.finalCta.title}</h2>
@@ -304,56 +312,57 @@ const mediaOutlets = ["Forbes Asia", "Bloomberg", "Tech in Asia", "ABS-CBN News"
 
       <footer id="footer" class="site-footer">
         <div class="container">
-          <div class="footer-grid">
-            <section class="footer-col">
-              <h4 data-i18n="footer.products">{en.footer.products}</h4>
-              <ul class="footer-links">
-                <li data-i18n="footer.ofwBanking">{en.footer.ofwBanking}</li>
-                <li data-i18n="footer.pesoRates">{en.footer.pesoRates}</li>
-                <li><a href="#" data-i18n="footer.sendUsToPh">{en.footer.sendUsToPh}</a></li>
-                <li><a href="#" data-i18n="footer.sendCaToPh">{en.footer.sendCaToPh}</a></li>
-                <li><a href="#" data-i18n="footer.sendUkToPh">{en.footer.sendUkToPh}</a></li>
-                <li><a href="#" data-i18n="footer.sendAeToPh">{en.footer.sendAeToPh}</a></li>
-              </ul>
-            </section>
+          <div class="footer-top">
+            <a class="brand footer-brand" href="#hero" aria-label="Aspora Philippines home">
+              <span class="brand-mark" aria-hidden="true">A</span>
+              <span class="brand-copy"><strong>Aspora</strong></span>
+            </a>
+            <div class="app-stores">
+              <a class="store-btn" href="#" aria-label="Download from Apple App Store">App Store</a>
+              <a class="store-btn" href="#" aria-label="Download from Google Play">Google Play</a>
+            </div>
+          </div>
 
-            <section class="footer-col">
-              <h4 data-i18n="footer.company">{en.footer.company}</h4>
-              <ul class="footer-links">
-                <li><a href="#" data-i18n="footer.billPayments">{en.footer.billPayments}</a></li>
-                <li><a href="#" data-i18n="footer.helpCenter">{en.footer.helpCenter}</a></li>
-                <li><a href="#" data-i18n="footer.roadmap">{en.footer.roadmap}</a></li>
-                <li><a href="#" data-i18n="footer.blog">{en.footer.blog}</a></li>
-              </ul>
-              <div class="socials" aria-label="Social media">
-                <a class="social" href="#" aria-label="Visit LinkedIn">in</a>
-                <a class="social" href="#" aria-label="Visit X">x</a>
-                <a class="social" href="#" aria-label="Visit Facebook">f</a>
-                <a class="social" href="#" aria-label="Visit Instagram">ig</a>
+          <nav class="footer-inline-links" aria-label="Footer links">
+            <a href="#" data-i18n="header.nav.sendMoney">{en.header.nav.sendMoney}</a>
+            <a href="#" data-i18n="header.nav.billPay">{en.header.nav.billPay}</a>
+            <a href="#" data-i18n="header.nav.helpCenter">{en.header.nav.helpCenter}</a>
+            <a href="#" data-i18n="header.nav.roadmap">{en.header.nav.roadmap}</a>
+            <a href="#" data-i18n="footer.pesoRates">{en.footer.pesoRates}</a>
+            <a href="#" data-i18n="footer.helpCenter">{en.footer.helpCenter}</a>
+            <a href="#" data-i18n="footer.roadmap">{en.footer.roadmap}</a>
+          </nav>
+
+          <div class="footer-country-rows">
+            <div class="country-row">
+              <span data-i18n="footer.liveIn">{en.footer.liveIn}</span>
+              <div class="arriving-list" aria-label="Live countries">
+                <span>US</span>
+                <span>UK</span>
+                <span>CA</span>
+                <span>AE</span>
+                <span>DE</span>
+                <span>IE</span>
               </div>
-            </section>
-
-            <section class="footer-col">
-              <h4 data-i18n="footer.resources">{en.footer.resources}</h4>
-              <label class="visually-hidden" for="liveCountries" data-i18n="footer.liveIn">{en.footer.liveIn}</label>
-              <select id="liveCountries" class="country-select">
-                <option>USA</option>
-                <option>UK</option>
-                <option>Canada</option>
-                <option>UAE</option>
-                <option>Singapore</option>
-                <option>Germany</option>
-              </select>
-              <p class="meta-line" data-i18n="footer.arrivingSoon">{en.footer.arrivingSoon}</p>
+            </div>
+            <div class="country-row">
+              <span data-i18n="footer.arrivingSoon">{en.footer.arrivingSoon}</span>
               <div class="arriving-list" aria-label="Arriving soon countries">
-                <span>Australia</span>
-                <span>Japan</span>
-                <span>Qatar</span>
+                <span>AU</span>
+                <span>JP</span>
+                <span>IT</span>
+                <span>ES</span>
+                <span>FR</span>
+                <span>SG</span>
               </div>
-            </section>
+            </div>
           </div>
 
           <p class="regulatory" data-i18n="footer.regulatory">{en.footer.regulatory}</p>
+          <p class="regulatory">
+            Real transfer rates, fees, and delivery options depend on route, payment method, and partner network. Terms and eligibility
+            apply.
+          </p>
         </div>
       </footer>
     </div>

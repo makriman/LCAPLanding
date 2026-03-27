@@ -6,10 +6,10 @@
   "header": {
     "logoTag": "Philippines",
     "nav": {
-      "sendMoney": "Send money",
-      "billPay": "Bill payment",
-      "helpCenter": "Help center",
-      "roadmap": "Roadmap"
+      "sendMoney": "OFW banking",
+      "billPay": "About us",
+      "helpCenter": "Careers",
+      "roadmap": "Blog"
     },
     "language": {
       "label": "Language",
@@ -23,6 +23,12 @@
     "subtitle": "Secure, lightning fast transfers at guaranteed Google rates.",
     "primaryCta": "Send money",
     "secondaryCta": "Download the app",
+    "ticker": {
+      "item1": "24x7 live customer support",
+      "item2": "256-bit encryption on all transfers",
+      "item3": "Never lose money on hidden fees",
+      "item4": "24x7"
+    },
     "points": {
       "secure": "Secure",
       "fast": "Lightning-fast",
@@ -47,8 +53,8 @@
     "noFee": "No fee"
   },
   "savings": {
-    "title": "Unlock savings with mid-market rates to the Philippines",
-    "subtitle": "Estimated comparison for a single transfer. Values are refreshed using live USD/PHP references and configurable provider margins.",
+    "title": "Unlock savings with Google rates to the Philippines",
+    "subtitle": "Here's how much US$500 gets you with Aspora",
     "reference": "Reference send amount",
     "updated": "Last updated",
     "headers": {
@@ -72,6 +78,7 @@
   },
   "testimonials": {
     "title": "What OFWs say about Aspora",
+    "subtitle": "For seamless and secure transfers",
     "prev": "Previous testimonials",
     "next": "Next testimonials",
     "cards": [
@@ -99,6 +106,9 @@
   },
   "security": {
     "title": "Security-first, always",
+    "alwaysTitle": "Always.",
+    "alwaysSubtitle": "Protecting your money at every step",
+    "support": "24x7 Customer support",
     "point1": "Proactive fraud detection 24x7, with layered authentication and risk monitoring.",
     "point2": "Customer funds safeguarded in segregated accounts with regulated financial institutions.",
     "point3": "24x7 customer support via in-app chat, email, and phone."
