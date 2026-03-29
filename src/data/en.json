@@ -91,6 +91,9 @@
   },
   "testimonials": {
     "title": "What OFWs say about Aspora",
+    "titlePrefix": "What",
+    "titleHighlight": "1 million+ OFWs",
+    "titleSuffix": "say about Aspora",
     "subtitle": "For seamless and secure transfers",
     "prev": "Previous testimonials",
     "next": "Next testimonials",
@@ -118,7 +121,7 @@
     ]
   },
   "security": {
-    "title": "Security-first, always",
+    "title": "Security-first. Always.",
     "alwaysTitle": "Always.",
     "alwaysSubtitle": "Protecting your money at every step",
     "visual": "Bank-grade security for every peso transfer.",

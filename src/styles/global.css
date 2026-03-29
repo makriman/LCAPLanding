@@ -239,7 +239,7 @@ main {
 
 .btn-nav {
   min-height: 52px;
-  padding-inline: 30px;
+  padding-inline: 32px;
 }
 
 .hero-section {
@@ -256,6 +256,11 @@ main {
 .hero-copy {
   display: grid;
   gap: 24px;
+}
+
+.hero-copy .btn-primary {
+  align-self: flex-start;
+  width: fit-content;
 }
 
 .hero-copy h1 {
@@ -317,21 +322,31 @@ html[lang="fil"] .hero-copy h1 {
 
 .amount-input,
 .amount-output {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--color-white);
   font-family: var(--font-inter);
   font-size: 32px;
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1;
+  padding-bottom: 12px;
 }
 
 .amount-input {
-  background: transparent;
-  border: 0;
   margin: 0;
   min-width: 0;
   outline: none;
   padding: 0;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+.amount-output {
+  cursor: default;
+  min-width: 0;
+  outline: none;
   width: 100%;
 }
 
@@ -389,6 +404,12 @@ html[lang="fil"] .hero-copy h1 {
   font-weight: 500;
   line-height: 140%;
   margin: 0;
+}
+
+.live-rate::before {
+  color: var(--color-green-light);
+  content: "↕ ";
+  font-weight: 700;
 }
 
 .zero-fee-pill {
@@ -478,7 +499,7 @@ html[lang="fil"] .hero-copy h1 {
 }
 
 .rates-table tbody td {
-  border-bottom: 1px solid var(--color-gray-5);
+  border-bottom: 1px solid rgba(64, 23, 144, 0.15);
   color: var(--color-black);
   font-family: var(--font-inter);
   font-size: 16px;
@@ -538,6 +559,10 @@ html[lang="fil"] .hero-copy h1 {
   padding: 2px 12px;
 }
 
+.save-pill::before {
+  content: "↗ ";
+}
+
 .table-updated {
   color: rgba(17, 17, 17, 0.5);
   font-family: var(--font-body);
@@ -588,7 +613,7 @@ html[lang="fil"] .hero-copy h1 {
   text-align: center;
 }
 
-.testimonials-title span {
+.testimonials-title-highlight {
   color: var(--color-aspora-purple);
 }
 

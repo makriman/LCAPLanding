@@ -54,7 +54,7 @@
     "recipientGets": "Matatanggap Nila",
     "rate": "Tantyang FX rate",
     "note": "Tantya lamang ang rate. Makikita ang final rate bago mo kumpirmahin ang padala.",
-    "liveRatePrefix": "Live Google rate",
+    "liveRatePrefix": "Live na Google rate",
     "promo": "Zero fee sa unang transfer",
     "cta": "Mag-sign up at magpadala",
     "loading": "Kumukuha ng pinakabagong rate...",
@@ -91,6 +91,9 @@
   },
   "testimonials": {
     "title": "Sabi ng mga OFW tungkol sa Aspora",
+    "titlePrefix": "Sabi ng",
+    "titleHighlight": "1 milyong+ OFWs",
+    "titleSuffix": "tungkol sa Aspora",
     "subtitle": "Para sa maayos at ligtas na transfers",
     "prev": "Nakaraang testimonials",
     "next": "Susunod na testimonials",
@@ -118,7 +121,7 @@
     ]
   },
   "security": {
-    "title": "Seguridad muna, palagi",
+    "title": "Seguridad muna. Palagi.",
     "alwaysTitle": "Palagi.",
     "alwaysSubtitle": "Pinoprotektahan ang pera mo sa bawat hakbang",
     "visual": "Bank-grade na seguridad sa bawat padala ng piso.",

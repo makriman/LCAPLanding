@@ -169,7 +169,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
             <div class="converter-block">
               <p class="converter-label" data-i18n="converter.recipientGets">{defaultCopy.converter.recipientGets}</p>
               <div class="converter-row">
-                <strong id="receiveAmount" class="amount-output">PHP 56,200.00</strong>
+                <input id="receiveAmount" class="amount-output" type="text" value="PHP 56,200.00" readonly aria-label="Receive amount" />
                 <div class="currency-selector-wrap currency-fixed">
                   <img src="/flags/ph.svg" alt="" class="flag" aria-hidden="true" />
                   <span>PHP</span>
@@ -276,7 +276,13 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
       <section class="section section-white testimonials-section" id="testimonials">
         <div class="site-shell">
-          <h2 class="section-title testimonials-title" data-i18n="testimonials.title">{defaultCopy.testimonials.title}</h2>
+          <h2 class="section-title testimonials-title">
+            <span data-i18n="testimonials.titlePrefix">{defaultCopy.testimonials.titlePrefix}</span>
+            <span class="testimonials-title-highlight" data-i18n="testimonials.titleHighlight">
+              {defaultCopy.testimonials.titleHighlight}
+            </span>
+            <span data-i18n="testimonials.titleSuffix">{defaultCopy.testimonials.titleSuffix}</span>
+          </h2>
           <p class="section-subtitle" data-i18n="testimonials.subtitle">{defaultCopy.testimonials.subtitle}</p>
 
           <div class="testimonial-nav">
@@ -588,8 +594,8 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         const routeRate = convertRate(sendCurrency, "PHP") || usdToPhp;
         const recipientValue = sendAmount * routeRate;
 
-        if (receiveAmount) {
-          receiveAmount.textContent = `PHP ${formatNumber(recipientValue)}`;
+        if (receiveAmount instanceof HTMLInputElement) {
+          receiveAmount.value = `PHP ${formatNumber(recipientValue)}`;
         }
 
         if (liveRateLabel) {
