@@ -1,35 +1,75 @@
 ---
-import en from "../data/en.json";
-import fil from "../data/fil.json";
-import competitorConfig from "../data/competitors.json";
 import "../styles/global.css";
 
-const translations = { en, fil };
-const sendCurrencies = ["USD", "CAD", "GBP", "EUR", "SGD", "AED"];
-const receiveCurrencies = ["PHP"];
+const sendCurrencies = ["USD", "GBP", "EUR", "CAD", "SGD", "AED"];
+const sendCurrencyFlags = {
+  USD: "/flags/us.svg",
+  GBP: "/flags/gb.svg",
+  EUR: "/flags/eu.svg",
+  CAD: "/flags/ca.svg",
+  SGD: "/flags/sg.svg",
+  AED: "/flags/ae.svg",
+};
 
-const fallbackMidRate = competitorConfig.midMarketFallback;
-const referenceAmount = competitorConfig.referenceSendAmount;
-const asOfLabel = new Intl.DateTimeFormat("en-US", { dateStyle: "long" }).format(new Date(competitorConfig.asOf));
+const referenceAmount = 1000;
+const fallbackMidRate = 56.2;
+const tableProviders = [
+  { id: "aspora", name: "Aspora", marginPct: 0.15, fee: 3 },
+  { id: "remitly", name: "Remitly", marginPct: 1.1, fee: 1.99 },
+  { id: "skrill", name: "Skrill", marginPct: 1.3, fee: 0 },
+  { id: "wise", name: "Wise", marginPct: 0.2, fee: 5.68 },
+  { id: "western-union", name: "Western Union", marginPct: 1.8, fee: 2.5 },
+];
 
-const initialRows = competitorConfig.providers.map((provider) => {
+const initialRows = tableProviders.map((provider) => {
   const effectiveRate = fallbackMidRate * (1 - provider.marginPct / 100);
-  const recipientGets = Math.max((referenceAmount - provider.feeUsd) * effectiveRate, 0);
+  const recipientGets = Math.max((referenceAmount - provider.fee) * effectiveRate, 0);
 
   return {
+    ...provider,
     effectiveRate,
     recipientGets,
   };
 });
 
-const testimonialFlagPairs = [
-  { from: "/flags/us.svg", to: "/flags/ph.svg" },
-  { from: "/flags/ca.svg", to: "/flags/ph.svg" },
-  { from: "/flags/ae.svg", to: "/flags/ph.svg" },
-  { from: "/flags/gb.svg", to: "/flags/ph.svg" },
+const asporaBase = initialRows.find((row) => row.id === "aspora")?.recipientGets ?? 0;
+const bestCompetitorBase = Math.max(...initialRows.filter((row) => row.id !== "aspora").map((row) => row.recipientGets));
+const initialSaveValue = Math.max(asporaBase - bestCompetitorBase, 0);
+
+const testimonials = [
+  {
+    fromFlag: "/flags/us.svg",
+    toFlag: "/flags/ph.svg",
+    person: "Joanna R.",
+    location: "Nurse, California to Pampanga",
+    quote:
+      "I switched because my family receives more pesos every month. Transfers land quickly and support is always responsive.",
+  },
+  {
+    fromFlag: "/flags/ca.svg",
+    toFlag: "/flags/ph.svg",
+    person: "Mark D.",
+    location: "Engineer, Toronto to Cebu",
+    quote: "Finally a remittance app with clear pricing. No surprises, and my parents get updates in real-time.",
+  },
+  {
+    fromFlag: "/flags/ae.svg",
+    toFlag: "/flags/ph.svg",
+    person: "Liza M.",
+    location: "Caregiver, Dubai to Iloilo",
+    quote: "The recurring transfer setup is a game changer. Tuition payments are now on autopilot.",
+  },
 ];
 
-const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
+const trustItems = [
+  "Never lose money on hidden fees",
+  "256-bit encryption on all transfers",
+  "24x7 customer support",
+];
+
+const featuredOutlets = ["CNBC", "YourStory", "Entrepreneur", "Economic Times", "Gulf News"];
+const liveCountries = ["US", "UK", "UAE", "EU", "SG", "PH"];
+const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 ---
 
 <!doctype html>
@@ -37,140 +77,161 @@ const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>{en.meta.title}</title>
-    <meta name="description" content={en.meta.description} />
+    <title>Aspora - Money transfers to the Philippines at Google Rates</title>
+    <meta
+      name="description"
+      content="Send money to the Philippines at Google-matching rates, low fees, transparent pricing, and instant transfers for OFWs and global Filipinos."
+    />
+    <meta property="og:title" content="Aspora - Money transfers to the Philippines at Google Rates" />
+    <meta
+      property="og:description"
+      content="Secure and lightning-fast transfers to the Philippines with transparent pricing and guaranteed Google rates."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="Aspora" />
+    <meta property="og:url" content="https://www.aspora.com" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <div class="page-shell">
-      <header class="site-header">
-        <div class="container">
-          <a class="brand" href="#hero" aria-label="Aspora Philippines home">
-            <span class="brand-mark" aria-hidden="true">A</span>
-            <span class="brand-copy">
-              <strong>Aspora</strong>
-              <span data-i18n="header.logoTag">{en.header.logoTag}</span>
-            </span>
+    <header id="siteHeader" class="site-header">
+      <div class="site-shell site-header-inner">
+        <a href="#hero" class="brand" aria-label="Aspora home">
+          <span class="brand-wordmark">Aspora</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Primary">
+          <a href="#hero"
+            >OFW banking
+            <span class="new-pill">New</span>
           </a>
+          <a href="#gateway">Pay bills</a>
+          <a href="#security">About us</a>
+          <a href="#footer">Careers</a>
+          <a href="#featured">Blog</a>
+        </nav>
 
-          <nav class="site-nav" aria-label="Primary">
-            <a href="#converter" data-i18n="header.nav.sendMoney">{en.header.nav.sendMoney}</a>
-            <a href="#gateway" data-i18n="header.nav.billPay">{en.header.nav.billPay}</a>
-            <a href="#footer" data-i18n="header.nav.helpCenter">{en.header.nav.helpCenter}</a>
-            <a href="#gateway" data-i18n="header.nav.roadmap">{en.header.nav.roadmap}</a>
-          </nav>
-
-          <div class="header-right">
-            <div class="language-switch" aria-label={en.header.language.label} data-i18n-aria-label="header.language.label">
-              <button type="button" data-lang="en" data-i18n="header.language.english">{en.header.language.english}</button>
-              <button type="button" data-lang="fil" data-i18n="header.language.filipino">{en.header.language.filipino}</button>
-            </div>
-            <a class="header-download-btn" href="#download" data-i18n="finalCta.button">
-              {en.finalCta.button}
-            </a>
-          </div>
+        <div class="desktop-actions">
+          <a href="#download" class="btn-primary btn-nav">Download app</a>
         </div>
-      </header>
 
-      <main class="container">
-        <section id="hero" class="section-card hero" aria-labelledby="hero-title">
+        <div class="mobile-actions">
+          <a href="#download" class="mobile-download">Download</a>
+          <button type="button" class="mobile-menu-btn" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="section section-white hero-section">
+        <div class="site-shell hero-grid">
           <div class="hero-copy">
-            <h1 id="hero-title" data-i18n="hero.title">{en.hero.title}</h1>
-            <p data-i18n="hero.subtitle">{en.hero.subtitle}</p>
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#converter" data-i18n="hero.primaryCta">{en.hero.primaryCta}</a>
-            </div>
+            <h1>Global finance for global Filipinos</h1>
+            <p>Secure, lightning fast transfers at guaranteed Google rates.</p>
+            <a href="#converter" class="btn-primary">Send money</a>
           </div>
 
-          <div class="converter" id="converter" aria-label="Currency converter">
-            <div class="converter-group">
-              <p class="converter-kicker" data-i18n="converter.sendAmount">{en.converter.sendAmount}</p>
+          <div id="converter" class="converter-card" aria-label="Send money converter">
+            <div class="converter-block">
+              <p class="converter-label">You Send</p>
               <div class="converter-row">
-                <input class="converter-amount-input" id="sendAmount" type="number" min="0" step="0.01" value="100" inputmode="decimal" />
-                <label class="currency-chip currency-select-chip" for="sendCurrency">
-                  <img id="sendFlag" class="flag" src="/flags/gb.svg" alt="" aria-hidden="true" />
-                  <select class="converter-currency-select" id="sendCurrency" data-i18n-aria-label="converter.sendCurrency">
+                <input id="sendAmount" class="amount-input" type="number" min="0" step="0.01" value="1000" inputmode="decimal" />
+                <div class="currency-selector-wrap">
+                  <img id="sendFlag" src="/flags/us.svg" alt="" class="flag" aria-hidden="true" />
+                  <select id="sendCurrency" class="currency-selector" aria-label="Send currency">
                     {sendCurrencies.map((currency) => (
-                      <option value={currency} selected={currency === "GBP"}>
+                      <option value={currency} selected={currency === "USD"}>
                         {currency}
                       </option>
                     ))}
                   </select>
-                </label>
+                </div>
               </div>
               <div class="converter-divider"></div>
-              <p id="rateValue" class="live-rate">{en.converter.liveRatePrefix}: 1 GBP = ₱72.10</p>
-              <p id="feeValue" class="promo-pill" data-i18n="converter.promo">{en.converter.promo}</p>
+              <p id="liveRate" class="live-rate">Live Google rate: 1 USD = PHP 56.20</p>
+              <p class="zero-fee-pill">Zero fee for first transfer</p>
             </div>
 
-            <div class="converter-group converter-group-receive" aria-live="polite">
-              <p class="converter-kicker" data-i18n="converter.recipientGets">{en.converter.recipientGets}</p>
+            <div class="converter-block">
+              <p class="converter-label">They receive</p>
               <div class="converter-row">
-                <strong id="recipientValue" class="recipient-amount">₱7,210.00</strong>
-                <span class="currency-chip">
-                  <img class="flag" src="/flags/ph.svg" alt="" aria-hidden="true" />
+                <strong id="receiveAmount" class="amount-output">PHP 56,200.00</strong>
+                <div class="currency-selector-wrap currency-fixed">
+                  <img src="/flags/ph.svg" alt="" class="flag" aria-hidden="true" />
                   <span>PHP</span>
-                </span>
+                </div>
               </div>
               <div class="converter-divider"></div>
             </div>
-
-            <select class="converter-hidden-field" id="receiveCurrency" aria-hidden="true" tabindex="-1">
-              {receiveCurrencies.map((currency) => (
-                <option value={currency}>{currency}</option>
-              ))}
-            </select>
-            <input class="converter-hidden-field" id="transferFee" type="number" min="0" step="0.01" value="0" aria-hidden="true" tabindex="-1" />
-            <p class="visually-hidden" id="converterStatus" data-i18n="converter.loading">{en.converter.loading}</p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="trust-ticker" aria-label="Trust highlights">
-          <span data-i18n="hero.ticker.item1">{en.hero.ticker.item1}</span>
-          <span data-i18n="hero.ticker.item2">{en.hero.ticker.item2}</span>
-          <span data-i18n="hero.ticker.item3">{en.hero.ticker.item3}</span>
-          <span data-i18n="hero.ticker.item4">{en.hero.ticker.item4}</span>
-        </section>
-
-        <section class="section-card savings-section" aria-labelledby="savings-title">
-          <h2 id="savings-title" class="section-title" data-i18n="savings.title">{en.savings.title}</h2>
-          <p class="section-subtitle" data-i18n="savings.subtitle">{en.savings.subtitle}</p>
-
-          <div class="comparison-meta">
-            <span id="referenceAmountText">{en.savings.reference}: US${referenceAmount.toFixed(2)}</span>
-            <span id="updatedAtText">{en.savings.updated}: {asOfLabel}</span>
+      <section class="section section-white trust-section" aria-label="Trust highlights">
+        <div class="site-shell">
+          <div class="trust-marquee-wrap">
+            <div class="trust-marquee-track">
+              <div class="trust-items">
+                {trustItems.map((item) => (
+                  <span>✓ {item}</span>
+                ))}
+              </div>
+              <div class="trust-items" aria-hidden="true">
+                {trustItems.map((item) => (
+                  <span>✓ {item}</span>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div class="comparison-table-wrap">
-            <table class="comparison-table">
+          <ul class="trust-static-list">
+            {trustItems.map((item) => (
+              <li>✓ {item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-lilac rates-section" id="rates">
+        <div class="site-shell">
+          <h2 class="section-title">Unlock savings with Google rates to the Philippines</h2>
+          <p class="section-subtitle">Here's how much US$1,000 gets you with Aspora</p>
+
+          <div class="rates-table-scroll">
+            <table class="rates-table" aria-label="Provider comparison table">
               <thead>
                 <tr>
-                  <th scope="col" data-i18n="savings.headers.provider">{en.savings.headers.provider}</th>
-                  <th scope="col" data-i18n="savings.headers.rate">{en.savings.headers.rate}</th>
-                  <th scope="col" data-i18n="savings.headers.fee">{en.savings.headers.fee}</th>
-                  <th scope="col" data-i18n="savings.headers.recipient">{en.savings.headers.recipient}</th>
-                  <th scope="col" data-i18n="savings.headers.delivery">{en.savings.headers.delivery}</th>
+                  <th scope="col">Provider</th>
+                  <th scope="col">Exchange rate</th>
+                  <th scope="col">Transfer fee</th>
+                  <th scope="col">Recipient gets</th>
                 </tr>
               </thead>
               <tbody>
-                {competitorConfig.providers.map((provider, index) => (
-                  <tr data-provider={provider.id} class={provider.id === "aspora" ? "is-aspora" : undefined}>
-                    <td>
-                      {provider.name}
-                      <sup>{index + 1}</sup>
-                    </td>
-                    <td data-cell="rate">{initialRows[index].effectiveRate.toFixed(4)} PHP</td>
-                    <td data-cell="fee">{provider.feeUsd === 0 ? en.converter.noFee : `US$${provider.feeUsd.toFixed(2)}`}</td>
+                {initialRows.map((row) => (
+                  <tr
+                    class={row.id === "aspora" ? "is-aspora" : undefined}
+                    data-provider={row.id}
+                    data-margin={row.marginPct}
+                    data-fee={row.fee}
+                  >
+                    <td>{row.name}</td>
+                    <td data-cell="rate">{row.effectiveRate.toFixed(2)}</td>
+                    <td data-cell="fee">{row.fee === 0 ? "US$0.00" : `US$${row.fee.toFixed(2)}`}</td>
                     <td data-cell="recipient">
-                      {new Intl.NumberFormat("en-PH", {
-                        style: "currency",
-                        currency: "PHP",
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      }).format(initialRows[index].recipientGets)}
-                    </td>
-                    <td>
-                      <span class="delivery-pill">{provider.delivery}</span>
+                      <div class="recipient-cell-wrap">
+                        <span>{`PHP ${row.recipientGets.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}`}</span>
+                        {row.id === "aspora" && (
+                          <span id="saveBadge" class="save-pill">Save PHP {initialSaveValue.toFixed(2)}</span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -178,416 +239,361 @@ const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
             </table>
           </div>
 
-          <p class="notice" data-i18n="savings.footnote">{en.savings.footnote}</p>
-          <h3 class="section-subtitle" data-i18n="savings.sourceTitle">{en.savings.sourceTitle}</h3>
-          <ol class="source-list">
-            {competitorConfig.providers.map((provider, index) => (
-              <li>
-                [{index + 1}] {provider.sourceLabel}: <a href={provider.sourceUrl} target="_blank" rel="noreferrer">{provider.sourceUrl}</a>
-              </li>
-            ))}
-          </ol>
-        </section>
+          <p id="tableUpdated" class="table-updated">Last updated at 06:01 PM GMT 29.03.26</p>
+        </div>
+      </section>
 
-        <section class="section-card stats-strip" aria-label={en.stats.title}>
-          <div class="stats-grid">
-            <article class="stat-card">
-              <strong data-i18n="stats.transferredValue">{en.stats.transferredValue}</strong>
-              <p data-i18n="stats.transferredLabel">{en.stats.transferredLabel}</p>
-            </article>
-            <article class="stat-card">
-              <strong data-i18n="stats.savedValue">{en.stats.savedValue}</strong>
-              <p data-i18n="stats.savedLabel">{en.stats.savedLabel}</p>
-            </article>
-            <article class="stat-card">
-              <strong data-i18n="stats.countriesValue">{en.stats.countriesValue}</strong>
-              <p data-i18n="stats.countriesLabel">{en.stats.countriesLabel}</p>
-            </article>
-          </div>
-        </section>
+      <section class="section section-white stats-section" aria-label="Aspora impact stats">
+        <div class="site-shell stats-grid">
+          <article class="stat-item">
+            <h3>$2 Bn+</h3>
+            <p>Securely transferred worldwide</p>
+          </article>
+          <article class="stat-item">
+            <h3>PHP 8.4 Bn+</h3>
+            <p>Saved by our users in forex fees</p>
+          </article>
+          <article class="stat-item">
+            <h3>6 Countries</h3>
+            <p>Where we're live and serving OFWs</p>
+          </article>
+        </div>
+      </section>
 
-        <section class="section-card testimonials-section" aria-labelledby="testimonial-title">
-          <div class="testimonial-header">
-            <h2 id="testimonial-title" class="section-title" data-i18n="testimonials.title">{en.testimonials.title}</h2>
-            <div class="carousel-controls">
-              <button
-                id="testimonialPrev"
-                type="button"
-                class="icon-btn"
-                aria-label={en.testimonials.prev}
-                data-i18n-aria-label="testimonials.prev"
-              >
-                <span aria-hidden="true">←</span>
-              </button>
-              <button
-                id="testimonialNext"
-                type="button"
-                class="icon-btn"
-                aria-label={en.testimonials.next}
-                data-i18n-aria-label="testimonials.next"
-              >
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
+      <section class="section section-white testimonials-section" id="testimonials">
+        <div class="site-shell">
+          <h2 class="section-title testimonials-title">
+            Trusted by <span>1 million+ OFWs</span> around the world
+          </h2>
+          <p class="section-subtitle">For seamless and secure transfers</p>
+
+          <div class="testimonial-nav">
+            <button id="testimonialPrev" type="button" class="icon-button" aria-label="Previous testimonials">←</button>
+            <button id="testimonialNext" type="button" class="icon-button" aria-label="Next testimonials">→</button>
           </div>
-          <p class="testimonials-subtitle" data-i18n="testimonials.subtitle">{en.testimonials.subtitle}</p>
 
           <div id="testimonialTrack" class="testimonial-track">
-            {en.testimonials.cards.map((card, index) => (
+            {testimonials.map((testimonial) => (
               <article class="testimonial-card">
-                <div class="testimonial-top">
-                  <span class="avatar" aria-hidden="true">{card.person.slice(0, 1)}</span>
+                <div class="testimonial-head">
+                  <span class="quote-mark" aria-hidden="true">“</span>
                   <div class="flag-pair" aria-hidden="true">
-                    <img class="flag" src={testimonialFlagPairs[index].from} alt="" loading="lazy" />
-                    <img class="flag" src={testimonialFlagPairs[index].to} alt="" loading="lazy" />
+                    <img src={testimonial.fromFlag} alt="" class="flag" />
+                    <img src={testimonial.toFlag} alt="" class="flag" />
                   </div>
                 </div>
-                <p data-i18n={`testimonials.cards.${index}.quote`}>{card.quote}</p>
-                <p class="person" data-i18n={`testimonials.cards.${index}.person`}>{card.person}</p>
-                <p class="location" data-i18n={`testimonials.cards.${index}.location`}>{card.location}</p>
-                <span class="rating" aria-label="Rated five out of five">★★★★★</span>
+                <p class="testimonial-quote">{testimonial.quote}</p>
+                <p class="testimonial-name">{testimonial.person}</p>
+                <p class="testimonial-location">{testimonial.location}</p>
               </article>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="section-card always-section" aria-labelledby="always-title">
-          <div class="always-head">
-            <div>
-              <h2 id="always-title" class="section-title" data-i18n="security.alwaysTitle">{en.security.alwaysTitle}</h2>
-              <p class="always-subtitle" data-i18n="security.alwaysSubtitle">{en.security.alwaysSubtitle}</p>
-            </div>
-            <div class="support-chip">
-              <span class="support-icon" aria-hidden="true">✓</span>
-              <span data-i18n="security.support">{en.security.support}</span>
+      <section id="security" class="section section-lilac security-section">
+        <div class="site-shell security-grid">
+          <div class="security-visual" aria-hidden="true">
+            <div class="security-visual-card">
+              <div class="security-lock">🔒</div>
+              <p>Bank-grade security for every peso transfer.</p>
             </div>
           </div>
-          <div class="always-points">
-            <p data-i18n="security.point1">{en.security.point1}</p>
-            <p data-i18n="security.point2">{en.security.point2}</p>
-            <p data-i18n="security.point3">{en.security.point3}</p>
-          </div>
-        </section>
 
-        <section id="gateway" class="section-card gateway-section" aria-labelledby="gateway-title">
-          <div class="gateway-visual" aria-hidden="true">
-            <div class="gateway-shape"></div>
-            <div class="gateway-person">OFW</div>
-          </div>
-          <div class="gateway-copy">
-            <span class="badge" data-i18n="gateway.badge">{en.gateway.badge}</span>
-            <h2 id="gateway-title" class="section-title" data-i18n="gateway.title">{en.gateway.title}</h2>
-            <ul class="gateway-bullets">
-              <li data-i18n="gateway.feature1Body">{en.gateway.feature1Body}</li>
-              <li data-i18n="gateway.feature2Body">{en.gateway.feature2Body}</li>
-              <li data-i18n="gateway.feature3Body">{en.gateway.feature3Body}</li>
+          <div class="security-content">
+            <h2 class="section-title">Security-first. Always.</h2>
+            <p class="section-subtitle security-subtitle">Protecting your money at every step</p>
+            <ul class="security-points">
+              <li>
+                <span class="security-icon">✓</span>
+                <span>Proactive fraud detection around the clock</span>
+              </li>
+              <li>
+                <span class="security-icon">✓</span>
+                <span>Funds held with regulated financial institutions</span>
+              </li>
+              <li>
+                <span class="security-icon">✓</span>
+                <span>24x7 customer support</span>
+              </li>
             </ul>
-            <a class="btn btn-primary gateway-cta" href="#" data-i18n="gateway.cta">{en.gateway.cta}</a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="section-card media-section" aria-labelledby="media-title">
-          <h2 id="media-title" class="section-title" data-i18n="media.title">{en.media.title}</h2>
-          <div class="media-strip">
-            {mediaOutlets.map((outlet) => (
-              <span class="media-chip">{outlet}</span>
+      <section id="gateway" class="section section-white gateway-section">
+        <div class="site-shell gateway-grid">
+          <div class="gateway-content">
+            <span class="coming-soon-badge">Coming soon</span>
+            <h2 class="section-title">Your gateway to the Philippines: Send, Pay, Invest</h2>
+            <ul class="gateway-points">
+              <li>Save in global currencies with up to 9% interest</li>
+              <li>Stay on top of your bills without lifting a finger</li>
+              <li>Automate your remittances and recurring transfers</li>
+            </ul>
+            <a class="btn-primary" href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer">See roadmap</a>
+          </div>
+
+          <div class="gateway-visual" aria-hidden="true">
+            <div class="phone-mockup">
+              <div class="phone-notch"></div>
+              <div class="phone-screen-card"></div>
+              <div class="phone-screen-line"></div>
+              <div class="phone-screen-line"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="featured" class="section section-white featured-section">
+        <div class="site-shell">
+          <h2 class="section-title">As featured in</h2>
+          <div class="featured-logos" aria-label="Featured publications">
+            {featuredOutlets.map((outlet) => (
+              <span>{outlet}</span>
             ))}
           </div>
-        </section>
-
-        <section class="purple-band" aria-hidden="true"></section>
-
-        <section id="download" class="final-cta" aria-labelledby="download-title">
-          <h2 id="download-title" class="section-title" data-i18n="finalCta.title">{en.finalCta.title}</h2>
-          <p class="section-subtitle" data-i18n="finalCta.subtitle">{en.finalCta.subtitle}</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#" data-i18n="finalCta.button">{en.finalCta.button}</a>
-          </div>
-          <div class="app-stores" aria-label="App download stores">
-            <a class="store-btn" href="#" aria-label="Download from Apple App Store">Apple App Store</a>
-            <a class="store-btn" href="#" aria-label="Download from Google Play">Google Play</a>
-          </div>
-        </section>
-      </main>
-
-      <footer id="footer" class="site-footer">
-        <div class="container">
-          <div class="footer-top">
-            <a class="brand footer-brand" href="#hero" aria-label="Aspora Philippines home">
-              <span class="brand-mark" aria-hidden="true">A</span>
-              <span class="brand-copy"><strong>Aspora</strong></span>
-            </a>
-            <div class="app-stores">
-              <a class="store-btn" href="#" aria-label="Download from Apple App Store">App Store</a>
-              <a class="store-btn" href="#" aria-label="Download from Google Play">Google Play</a>
-            </div>
-          </div>
-
-          <nav class="footer-inline-links" aria-label="Footer links">
-            <a href="#" data-i18n="header.nav.sendMoney">{en.header.nav.sendMoney}</a>
-            <a href="#" data-i18n="header.nav.billPay">{en.header.nav.billPay}</a>
-            <a href="#" data-i18n="header.nav.helpCenter">{en.header.nav.helpCenter}</a>
-            <a href="#" data-i18n="header.nav.roadmap">{en.header.nav.roadmap}</a>
-            <a href="#" data-i18n="footer.pesoRates">{en.footer.pesoRates}</a>
-            <a href="#" data-i18n="footer.helpCenter">{en.footer.helpCenter}</a>
-            <a href="#" data-i18n="footer.roadmap">{en.footer.roadmap}</a>
-          </nav>
-
-          <div class="footer-country-rows">
-            <div class="country-row">
-              <span data-i18n="footer.liveIn">{en.footer.liveIn}</span>
-              <div class="arriving-list" aria-label="Live countries">
-                <span>US</span>
-                <span>UK</span>
-                <span>CA</span>
-                <span>AE</span>
-                <span>DE</span>
-                <span>IE</span>
-              </div>
-            </div>
-            <div class="country-row">
-              <span data-i18n="footer.arrivingSoon">{en.footer.arrivingSoon}</span>
-              <div class="arriving-list" aria-label="Arriving soon countries">
-                <span>AU</span>
-                <span>JP</span>
-                <span>IT</span>
-                <span>ES</span>
-                <span>FR</span>
-                <span>SG</span>
-              </div>
-            </div>
-          </div>
-
-          <p class="regulatory" data-i18n="footer.regulatory">{en.footer.regulatory}</p>
-          <p class="regulatory">
-            Real transfer rates, fees, and delivery options depend on route, payment method, and partner network. Terms and eligibility
-            apply.
-          </p>
         </div>
-      </footer>
-    </div>
+      </section>
+
+      <section id="download" class="section cta-section">
+        <div class="site-shell cta-inner">
+          <h2 class="section-title">Your world. Your money. Get the Aspora app.</h2>
+          <p class="section-subtitle">Wherever you're headed, Aspora makes finances simple.</p>
+          <div class="cta-downloads" aria-label="App download options">
+            <a href="#" class="store-badge" aria-label="Download on the App Store">
+              <span>Apple App Store</span>
+            </a>
+            <a href="#" class="store-badge" aria-label="Get it on Google Play">
+              <span>Google Play</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="site-footer">
+      <div class="site-shell footer-inner">
+        <div class="footer-top-row">
+          <a href="#hero" class="brand" aria-label="Aspora home">
+            <span class="brand-wordmark">Aspora</span>
+          </a>
+          <div class="cta-downloads" aria-label="Footer app download options">
+            <a href="#" class="store-badge"><span>App Store</span></a>
+            <a href="#" class="store-badge"><span>Google Play</span></a>
+          </div>
+        </div>
+
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a href="#hero">OFW banking</a>
+          <a href="#gateway">Pay bills</a>
+          <a href="#security">About us</a>
+          <a href="#footer">Careers</a>
+          <a href="#featured">Blog</a>
+          <a href="#rates">Currency rates</a>
+          <a href="#footer">Help</a>
+          <a href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer">Roadmap</a>
+        </nav>
+
+        <div class="country-groups">
+          <div class="country-group">
+            <p>Live in</p>
+            <div class="country-chips">
+              {liveCountries.map((country) => (
+                <span>{country}</span>
+              ))}
+            </div>
+          </div>
+
+          <div class="country-group">
+            <p>Arriving soon in</p>
+            <div class="country-chips">
+              {arrivingSoonCountries.map((country) => (
+                <span>{country}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-legal">
+          <p>
+            Aspora Inc. is a U.S. money services business partner network. Philippine payouts are delivered through licensed banking and
+            e-money partners supervised by the Bangko Sentral ng Pilipinas (BSP).
+          </p>
+          <p>
+            Rates, fees, and delivery timelines vary by route, payment method, and partner network. Terms, eligibility, and compliance
+            checks apply.
+          </p>
+          <p>Contact: <a href="mailto:help@aspora.com">help@aspora.com</a></p>
+        </div>
+
+        <div class="footer-bottom-row">
+          <p>© 2025 Aspora.com (Vance Inc). All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">X</a>
+            <a href="#">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script
       define:vars={{
-        translations,
-        competitorConfig,
+        sendCurrencyFlags,
+        referenceAmount,
+        fallbackMidRate,
       }}
     >
-      const STORAGE_KEY = "aspora-lang";
-      const fallbackRates = {
-        USD: 1,
-        CAD: 1.35,
-        GBP: 0.77,
-        EUR: 0.92,
-        SGD: 1.34,
-        AED: 3.67,
-        PHP: competitorConfig.midMarketFallback,
+      const header = document.getElementById("siteHeader");
+      let lastScrollY = window.scrollY;
+
+      const handleHeaderOnScroll = () => {
+        const currentScroll = window.scrollY;
+        const scrollingDown = currentScroll > lastScrollY;
+        const beyondThreshold = currentScroll > 80;
+
+        if (header) {
+          header.classList.toggle("is-hidden", scrollingDown && beyondThreshold);
+        }
+
+        lastScrollY = currentScroll;
       };
 
-      let currentLang = localStorage.getItem(STORAGE_KEY) || "en";
-      if (!translations[currentLang]) {
-        currentLang = "en";
-      }
+      window.addEventListener("scroll", handleHeaderOnScroll, { passive: true });
 
-      const languageButtons = Array.from(document.querySelectorAll("[data-lang]"));
+      const rates = {
+        USD: 1,
+        GBP: 0.79,
+        EUR: 0.92,
+        CAD: 1.36,
+        SGD: 1.35,
+        AED: 3.67,
+        PHP: fallbackMidRate,
+      };
+
       const amountInput = document.getElementById("sendAmount");
       const sendCurrencyInput = document.getElementById("sendCurrency");
-      const receiveCurrencyInput = document.getElementById("receiveCurrency");
-      const transferFeeInput = document.getElementById("transferFee");
-      const recipientValue = document.getElementById("recipientValue");
-      const rateValue = document.getElementById("rateValue");
-      const feeValue = document.getElementById("feeValue");
       const sendFlag = document.getElementById("sendFlag");
-      const converterStatus = document.getElementById("converterStatus");
-      const referenceAmountText = document.getElementById("referenceAmountText");
-      const updatedAtText = document.getElementById("updatedAtText");
-      const testimonialTrack = document.getElementById("testimonialTrack");
-      const testimonialPrev = document.getElementById("testimonialPrev");
-      const testimonialNext = document.getElementById("testimonialNext");
+      const liveRateLabel = document.getElementById("liveRate");
+      const receiveAmount = document.getElementById("receiveAmount");
+      const tableUpdated = document.getElementById("tableUpdated");
+      const saveBadge = document.getElementById("saveBadge");
 
-      const comparisonRows = competitorConfig.providers.map((provider) => ({
-        provider,
-        row: document.querySelector(`tr[data-provider="${provider.id}"]`),
-      }));
-      const sendCurrencyFlags = {
-        USD: "/flags/us.svg",
-        CAD: "/flags/ca.svg",
-        GBP: "/flags/gb.svg",
-        EUR: "/flags/eu.svg",
-        SGD: "/flags/sg.svg",
-        AED: "/flags/ae.svg",
-      };
+      let usdToPhp = fallbackMidRate;
 
-      let rates = { ...fallbackRates };
-      let usdToPhp = competitorConfig.midMarketFallback;
-      let lastUpdatedAt = competitorConfig.asOf;
-
-      const localeForLanguage = () => (currentLang === "fil" ? "fil-PH" : "en-US");
-
-      const getNestedValue = (source, path) =>
-        path.split(".").reduce((accumulator, segment) => {
-          if (accumulator === undefined || accumulator === null) {
-            return undefined;
-          }
-
-          if (Array.isArray(accumulator) && /^\d+$/.test(segment)) {
-            return accumulator[Number(segment)];
-          }
-
-          return accumulator[segment];
-        }, source);
-
-      const t = (path) => {
-        const value = getNestedValue(translations[currentLang], path);
-        return typeof value === "string" ? value : path;
-      };
-
-      const formatCurrency = (value, currency) =>
-        new Intl.NumberFormat(localeForLanguage(), {
+      const formatCurrency = (value, currency = "USD") =>
+        new Intl.NumberFormat("en-US", {
           style: "currency",
           currency,
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         }).format(value);
 
-      const formatRate = (value) =>
-        new Intl.NumberFormat(localeForLanguage(), {
-          minimumFractionDigits: 4,
-          maximumFractionDigits: 4,
+      const formatNumber = (value, digits = 2) =>
+        new Intl.NumberFormat("en-US", {
+          minimumFractionDigits: digits,
+          maximumFractionDigits: digits,
         }).format(value);
 
-      const formatDate = (value) => {
-        const date = new Date(value);
-        if (Number.isNaN(date.getTime())) {
-          return value;
-        }
-
-        return new Intl.DateTimeFormat(localeForLanguage(), {
-          dateStyle: "long",
-          timeStyle: "short",
-        }).format(date);
-      };
-
-      const convertRate = (fromCurrency, toCurrency) => {
-        const fromRate = rates[fromCurrency];
-        const toRate = rates[toCurrency];
-
-        if (!fromRate || !toRate) {
+      const convertRate = (from, to) => {
+        if (!rates[from] || !rates[to]) {
           return null;
         }
 
-        return toRate / fromRate;
-      };
-
-      const setLanguage = (nextLanguage) => {
-        if (!translations[nextLanguage]) {
-          return;
-        }
-
-        currentLang = nextLanguage;
-        localStorage.setItem(STORAGE_KEY, currentLang);
-        document.documentElement.lang = currentLang === "fil" ? "fil" : "en";
-
-        document.querySelectorAll("[data-i18n]").forEach((element) => {
-          const key = element.dataset.i18n;
-          if (!key) {
-            return;
-          }
-
-          const translatedText = getNestedValue(translations[currentLang], key);
-          if (typeof translatedText === "string") {
-            element.textContent = translatedText;
-          }
-        });
-
-        document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
-          const key = element.dataset.i18nAriaLabel;
-          if (!key) {
-            return;
-          }
-
-          const translatedText = getNestedValue(translations[currentLang], key);
-          if (typeof translatedText === "string") {
-            element.setAttribute("aria-label", translatedText);
-          }
-        });
-
-        languageButtons.forEach((button) => {
-          const isActive = button.dataset.lang === currentLang;
-          button.classList.toggle("is-active", isActive);
-          button.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-
-        document.title = t("meta.title");
-        const descriptionTag = document.querySelector("meta[name='description']");
-        if (descriptionTag) {
-          descriptionTag.setAttribute("content", t("meta.description"));
-        }
-
-        updateConverter();
-        updateComparisonTable();
+        return rates[to] / rates[from];
       };
 
       const updateConverter = () => {
-        const amount = Math.max(Number(amountInput.value) || 0, 0);
-        const transferFee = Math.max(Number(transferFeeInput.value) || 0, 0);
+        if (!(amountInput instanceof HTMLInputElement) || !(sendCurrencyInput instanceof HTMLSelectElement)) {
+          return;
+        }
+
+        const sendAmount = Math.max(Number(amountInput.value) || 0, 0);
         const sendCurrency = sendCurrencyInput.value;
-        const receiveCurrency = receiveCurrencyInput.value;
+        const routeRate = convertRate(sendCurrency, "PHP") || usdToPhp;
+        const recipientValue = sendAmount * routeRate;
 
-        const routeRate = convertRate(sendCurrency, receiveCurrency) || usdToPhp;
-        const netAmount = Math.max(amount - transferFee, 0);
-        const recipientGets = netAmount * routeRate;
-        const feeInReceiveCurrency = transferFee * routeRate;
+        if (receiveAmount) {
+          receiveAmount.textContent = `PHP ${formatNumber(recipientValue)}`;
+        }
 
-        recipientValue.textContent = formatCurrency(recipientGets, receiveCurrency);
-        rateValue.textContent = `${t("converter.liveRatePrefix")}: 1 ${sendCurrency} = ${formatCurrency(routeRate, receiveCurrency)}`;
-        feeValue.textContent =
-          transferFee === 0
-            ? t("converter.promo")
-            : `${formatCurrency(transferFee, sendCurrency)} (${formatCurrency(feeInReceiveCurrency, receiveCurrency)})`;
+        if (liveRateLabel) {
+          liveRateLabel.textContent = `Live Google rate: 1 ${sendCurrency} = PHP ${formatNumber(routeRate, 2)}`;
+        }
 
         if (sendFlag instanceof HTMLImageElement) {
           sendFlag.src = sendCurrencyFlags[sendCurrency] || "/flags/us.svg";
         }
       };
 
-      const updateComparisonTable = () => {
-        referenceAmountText.textContent = `${t("savings.reference")}: ${formatCurrency(competitorConfig.referenceSendAmount, "USD")}`;
-        updatedAtText.textContent = `${t("savings.updated")}: ${formatDate(lastUpdatedAt)}`;
+      const updateTable = () => {
+        const rows = Array.from(document.querySelectorAll("tr[data-provider]"));
+        let asporaRecipient = 0;
+        let bestCompetitorRecipient = 0;
 
-        comparisonRows.forEach(({ provider, row }) => {
-          if (!row) {
-            return;
-          }
+        rows.forEach((row) => {
+          const marginPct = Number(row.getAttribute("data-margin") || 0);
+          const fee = Number(row.getAttribute("data-fee") || 0);
 
-          const effectiveRate = usdToPhp * (1 - provider.marginPct / 100);
-          const recipientGets = Math.max((competitorConfig.referenceSendAmount - provider.feeUsd) * effectiveRate, 0);
+          const effectiveRate = usdToPhp * (1 - marginPct / 100);
+          const recipientGets = Math.max((referenceAmount - fee) * effectiveRate, 0);
 
           const rateCell = row.querySelector('[data-cell="rate"]');
           const feeCell = row.querySelector('[data-cell="fee"]');
-          const recipientCell = row.querySelector('[data-cell="recipient"]');
+          const recipientCell = row.querySelector('[data-cell="recipient"] > .recipient-cell-wrap > span');
 
           if (rateCell) {
-            rateCell.textContent = `${formatRate(effectiveRate)} PHP`;
+            rateCell.textContent = formatNumber(effectiveRate, 2);
           }
 
           if (feeCell) {
-            feeCell.textContent = provider.feeUsd === 0 ? t("converter.noFee") : formatCurrency(provider.feeUsd, "USD");
+            feeCell.textContent = formatCurrency(fee, "USD");
           }
 
           if (recipientCell) {
-            recipientCell.textContent = formatCurrency(recipientGets, "PHP");
+            recipientCell.textContent = `PHP ${formatNumber(recipientGets)}`;
+          }
+
+          if (row.getAttribute("data-provider") === "aspora") {
+            asporaRecipient = recipientGets;
+          } else {
+            bestCompetitorRecipient = Math.max(bestCompetitorRecipient, recipientGets);
           }
         });
+
+        const saveValue = Math.max(asporaRecipient - bestCompetitorRecipient, 0);
+        if (saveBadge) {
+          saveBadge.textContent = `Save PHP ${formatNumber(saveValue)}`;
+        }
       };
 
-      const setStatus = (message) => {
-        converterStatus.textContent = message;
+      const formatUpdatedLabel = (isoString) => {
+        const date = new Date(isoString);
+        if (Number.isNaN(date.getTime())) {
+          return "Last updated at 06:01 PM GMT 29.03.26";
+        }
+
+        const time = new Intl.DateTimeFormat("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: "Europe/London",
+        }).format(date);
+
+        const day = new Intl.DateTimeFormat("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+          timeZone: "Europe/London",
+        }).format(date);
+
+        return `Last updated at ${time} GMT ${day}`;
       };
 
-      const fetchLiveRates = async () => {
-        setStatus(t("converter.loading"));
-
+      const fetchRates = async () => {
         try {
           const response = await fetch("/api/rates.json", {
             headers: {
@@ -596,47 +602,40 @@ const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
           });
 
           if (!response.ok) {
-            throw new Error(`Unexpected status ${response.status}`);
+            return;
           }
 
           const payload = await response.json();
           if (!payload?.rates?.PHP) {
-            throw new Error("Missing PHP rate");
+            return;
           }
 
-          rates = {
-            ...rates,
-            ...payload.rates,
-          };
+          Object.assign(rates, payload.rates);
 
-          const latestUsdToPhp = convertRate("USD", "PHP");
-          if (latestUsdToPhp) {
-            usdToPhp = latestUsdToPhp;
+          const latestUsdPhp = convertRate("USD", "PHP");
+          if (latestUsdPhp) {
+            usdToPhp = latestUsdPhp;
           }
 
-          lastUpdatedAt = payload.updatedAt || new Date().toISOString();
-          setStatus(`${t("converter.updated")}: ${formatDate(lastUpdatedAt)}`);
+          if (tableUpdated) {
+            tableUpdated.textContent = formatUpdatedLabel(payload.updatedAt || new Date().toISOString());
+          }
+
+          updateConverter();
+          updateTable();
         } catch {
-          setStatus(t("converter.error"));
+          // no-op fallback
         }
-
-        updateConverter();
-        updateComparisonTable();
       };
 
-      languageButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const language = button.dataset.lang;
-          if (language) {
-            setLanguage(language);
-          }
-        });
-      });
+      if (amountInput && sendCurrencyInput) {
+        amountInput.addEventListener("input", updateConverter);
+        sendCurrencyInput.addEventListener("change", updateConverter);
+      }
 
-      [amountInput, sendCurrencyInput, receiveCurrencyInput, transferFeeInput].forEach((element) => {
-        element.addEventListener("input", updateConverter);
-        element.addEventListener("change", updateConverter);
-      });
+      const testimonialTrack = document.getElementById("testimonialTrack");
+      const testimonialPrev = document.getElementById("testimonialPrev");
+      const testimonialNext = document.getElementById("testimonialNext");
 
       testimonialPrev?.addEventListener("click", () => {
         testimonialTrack?.scrollBy({ left: -320, behavior: "smooth" });
@@ -646,10 +645,9 @@ const mediaOutlets = ["CNBC", "YourStory", "Entrepreneur", "ET", "Gulf News"];
         testimonialTrack?.scrollBy({ left: 320, behavior: "smooth" });
       });
 
-      setLanguage(currentLang);
       updateConverter();
-      updateComparisonTable();
-      fetchLiveRates();
+      updateTable();
+      fetchRates();
     </script>
   </body>
 </html>
