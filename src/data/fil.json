@@ -4,9 +4,17 @@
     "description": "Magpadala, magbayad, at mag-ipon para sa pamilya sa Pilipinas gamit ang mas magandang rate, mababang bayarin, at ligtas na remittance."
   },
   "header": {
+    "brandAria": "Aspora home",
+    "mobileDownload": "Download",
+    "menuAria": "Buksan ang menu",
     "logoTag": "Pilipinas",
     "nav": {
       "sendMoney": "OFW banking",
+      "newTag": "Bago",
+      "payBills": "Magbayad ng bills",
+      "aboutUs": "Tungkol sa amin",
+      "careers": "Karera",
+      "blog": "Blog",
       "billPay": "Tungkol sa amin",
       "helpCenter": "Careers",
       "roadmap": "Blog"
@@ -14,7 +22,9 @@
     "language": {
       "label": "Wika",
       "english": "Ingles",
-      "filipino": "Filipino"
+      "filipino": "Filipino",
+      "englishShort": "EN",
+      "filipinoShort": "FIL"
     }
   },
   "hero": {
@@ -54,9 +64,12 @@
   },
   "savings": {
     "title": "Mas malaking tipid gamit ang Google rates papuntang Pilipinas",
-    "subtitle": "Narito kung magkano ang US$500 gamit ang Aspora",
+    "subtitle": "Narito kung magkano ang US$1,000 gamit ang Aspora",
     "reference": "Halimbawang halaga ng padala",
     "updated": "Huling update",
+    "updatedFallback": "Huling update: 06:01 PM GMT 29.03.26",
+    "savePrefix": "Tipid na PHP",
+    "tableAria": "Talahanayan ng paghahambing ng provider",
     "headers": {
       "provider": "Provider",
       "rate": "Palitan",
@@ -108,6 +121,7 @@
     "title": "Seguridad muna, palagi",
     "alwaysTitle": "Palagi.",
     "alwaysSubtitle": "Pinoprotektahan ang pera mo sa bawat hakbang",
+    "visual": "Bank-grade na seguridad sa bawat padala ng piso.",
     "support": "24x7 Customer support",
     "point1": "Proactive fraud detection 24x7, may layered authentication at risk monitoring.",
     "point2": "Pinoprotektahan ang customer funds sa segregated accounts sa regulated financial institutions.",
@@ -130,7 +144,12 @@
   "finalCta": {
     "title": "Iyong mundo. Iyong pera. Kunin ang Aspora app.",
     "subtitle": "Magpadala pauwi sa loob ng ilang minuto gamit ang malinaw na presyo at OFW-first support.",
-    "button": "I-download ang app"
+    "button": "I-download ang app",
+    "downloadAria": "Mga opsyon sa pag-download ng app",
+    "storeApple": "Apple App Store",
+    "storeGoogle": "Google Play",
+    "storeAppleAria": "I-download sa App Store",
+    "storeGoogleAria": "Kunin sa Google Play"
   },
   "footer": {
     "products": "Mga produkto",
@@ -148,6 +167,11 @@
     "blog": "OFW resources",
     "liveIn": "Live sa",
     "arrivingSoon": "Malapit na",
-    "regulatory": "Ang Aspora Inc. ay bahagi ng U.S. money services business partner network. Ang payouts sa Pilipinas ay idinadaan sa licensed banking at e-money partners na pinangangasiwaan ng Bangko Sentral ng Pilipinas (BSP)."
+    "regulatory": "Ang Aspora Inc. ay bahagi ng U.S. money services business partner network. Ang payouts sa Pilipinas ay idinadaan sa licensed banking at e-money partners na pinangangasiwaan ng Bangko Sentral ng Pilipinas (BSP).",
+    "disclaimer": "Nag-iiba ang rates, bayarin, at delivery timelines depende sa route, paraan ng bayad, at partner network. May bisa ang terms, eligibility, at compliance checks.",
+    "contactLabel": "Makipag-ugnayan:",
+    "copyright": "© 2025 Aspora.com (Vance Inc). Lahat ng karapatan ay nakalaan.",
+    "privacy": "Patakaran sa Privacy",
+    "terms": "Mga Tuntunin ng Paggamit"
   }
 }

@@ -4,9 +4,17 @@
     "description": "Send, pay and save for loved ones in the Philippines with better rates, low fees, and secure global transfers."
   },
   "header": {
+    "brandAria": "Aspora home",
+    "mobileDownload": "Download",
+    "menuAria": "Open menu",
     "logoTag": "Philippines",
     "nav": {
       "sendMoney": "OFW banking",
+      "newTag": "New",
+      "payBills": "Pay bills",
+      "aboutUs": "About us",
+      "careers": "Careers",
+      "blog": "Blog",
       "billPay": "About us",
       "helpCenter": "Careers",
       "roadmap": "Blog"
@@ -14,7 +22,9 @@
     "language": {
       "label": "Language",
       "english": "English",
-      "filipino": "Filipino"
+      "filipino": "Filipino",
+      "englishShort": "EN",
+      "filipinoShort": "FIL"
     }
   },
   "hero": {
@@ -54,9 +64,12 @@
   },
   "savings": {
     "title": "Unlock savings with Google rates to the Philippines",
-    "subtitle": "Here's how much US$500 gets you with Aspora",
+    "subtitle": "Here's how much US$1,000 gets you with Aspora",
     "reference": "Reference send amount",
     "updated": "Last updated",
+    "updatedFallback": "Last updated at 06:01 PM GMT 29.03.26",
+    "savePrefix": "Save PHP",
+    "tableAria": "Provider comparison table",
     "headers": {
       "provider": "Provider",
       "rate": "Exchange rate",
@@ -108,6 +121,7 @@
     "title": "Security-first, always",
     "alwaysTitle": "Always.",
     "alwaysSubtitle": "Protecting your money at every step",
+    "visual": "Bank-grade security for every peso transfer.",
     "support": "24x7 Customer support",
     "point1": "Proactive fraud detection 24x7, with layered authentication and risk monitoring.",
     "point2": "Customer funds safeguarded in segregated accounts with regulated financial institutions.",
@@ -130,7 +144,12 @@
   "finalCta": {
     "title": "Your world. Your money. Get the Aspora app.",
     "subtitle": "Move money home in minutes with transparent pricing and OFW-first support.",
-    "button": "Download the app"
+    "button": "Download app",
+    "downloadAria": "App download options",
+    "storeApple": "Apple App Store",
+    "storeGoogle": "Google Play",
+    "storeAppleAria": "Download on the App Store",
+    "storeGoogleAria": "Get it on Google Play"
   },
   "footer": {
     "products": "Products",
@@ -148,6 +167,11 @@
     "blog": "OFW resources",
     "liveIn": "Live in",
     "arrivingSoon": "Arriving soon",
-    "regulatory": "Aspora Inc. is a U.S. money services business partner network. Philippine payouts are delivered through licensed banking and e-money partners supervised by the Bangko Sentral ng Pilipinas (BSP)."
+    "regulatory": "Aspora Inc. is a U.S. money services business partner network. Philippine payouts are delivered through licensed banking and e-money partners supervised by the Bangko Sentral ng Pilipinas (BSP).",
+    "disclaimer": "Rates, fees, and delivery timelines vary by route, payment method, and partner network. Terms, eligibility, and compliance checks apply.",
+    "contactLabel": "Contact:",
+    "copyright": "© 2025 Aspora.com (Vance Inc). All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   }
 }

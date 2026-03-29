@@ -1,5 +1,10 @@
 ---
+import en from "../data/en.json";
+import fil from "../data/fil.json";
 import "../styles/global.css";
+
+const translations = { en, fil };
+const defaultCopy = en;
 
 const sendCurrencies = ["USD", "GBP", "EUR", "CAD", "SGD", "AED"];
 const sendCurrencyFlags = {
@@ -36,35 +41,16 @@ const asporaBase = initialRows.find((row) => row.id === "aspora")?.recipientGets
 const bestCompetitorBase = Math.max(...initialRows.filter((row) => row.id !== "aspora").map((row) => row.recipientGets));
 const initialSaveValue = Math.max(asporaBase - bestCompetitorBase, 0);
 
-const testimonials = [
-  {
-    fromFlag: "/flags/us.svg",
-    toFlag: "/flags/ph.svg",
-    person: "Joanna R.",
-    location: "Nurse, California to Pampanga",
-    quote:
-      "I switched because my family receives more pesos every month. Transfers land quickly and support is always responsive.",
-  },
-  {
-    fromFlag: "/flags/ca.svg",
-    toFlag: "/flags/ph.svg",
-    person: "Mark D.",
-    location: "Engineer, Toronto to Cebu",
-    quote: "Finally a remittance app with clear pricing. No surprises, and my parents get updates in real-time.",
-  },
-  {
-    fromFlag: "/flags/ae.svg",
-    toFlag: "/flags/ph.svg",
-    person: "Liza M.",
-    location: "Caregiver, Dubai to Iloilo",
-    quote: "The recurring transfer setup is a game changer. Tuition payments are now on autopilot.",
-  },
+const testimonialFlags = [
+  { fromFlag: "/flags/us.svg", toFlag: "/flags/ph.svg" },
+  { fromFlag: "/flags/ca.svg", toFlag: "/flags/ph.svg" },
+  { fromFlag: "/flags/ae.svg", toFlag: "/flags/ph.svg" },
 ];
 
 const trustItems = [
-  "Never lose money on hidden fees",
-  "256-bit encryption on all transfers",
-  "24x7 customer support",
+  { key: "hero.ticker.item3", text: defaultCopy.hero.ticker.item3 },
+  { key: "hero.ticker.item2", text: defaultCopy.hero.ticker.item2 },
+  { key: "hero.ticker.item1", text: defaultCopy.hero.ticker.item1 },
 ];
 
 const featuredOutlets = ["CNBC", "YourStory", "Entrepreneur", "Economic Times", "Gulf News"];
@@ -77,16 +63,10 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Aspora - Money transfers to the Philippines at Google Rates</title>
-    <meta
-      name="description"
-      content="Send money to the Philippines at Google-matching rates, low fees, transparent pricing, and instant transfers for OFWs and global Filipinos."
-    />
-    <meta property="og:title" content="Aspora - Money transfers to the Philippines at Google Rates" />
-    <meta
-      property="og:description"
-      content="Secure and lightning-fast transfers to the Philippines with transparent pricing and guaranteed Google rates."
-    />
+    <title>{defaultCopy.meta.title}</title>
+    <meta name="description" content={defaultCopy.meta.description} />
+    <meta property="og:title" content={defaultCopy.meta.title} />
+    <meta property="og:description" content={defaultCopy.meta.description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content="Aspora" />
@@ -96,28 +76,58 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
   <body>
     <header id="siteHeader" class="site-header">
       <div class="site-shell site-header-inner">
-        <a href="#hero" class="brand" aria-label="Aspora home">
+        <a
+          href="#hero"
+          class="brand"
+          aria-label={defaultCopy.header.brandAria}
+          data-i18n-aria-label="header.brandAria"
+        >
           <span class="brand-wordmark">Aspora</span>
         </a>
 
         <nav class="desktop-nav" aria-label="Primary">
-          <a href="#hero"
-            >OFW banking
-            <span class="new-pill">New</span>
+          <a href="#hero" data-i18n="header.nav.sendMoney">
+            {defaultCopy.header.nav.sendMoney}
+            <span class="new-pill" data-i18n="header.nav.newTag">{defaultCopy.header.nav.newTag}</span>
           </a>
-          <a href="#gateway">Pay bills</a>
-          <a href="#security">About us</a>
-          <a href="#footer">Careers</a>
-          <a href="#featured">Blog</a>
+          <a href="#gateway" data-i18n="header.nav.payBills">{defaultCopy.header.nav.payBills}</a>
+          <a href="#security" data-i18n="header.nav.aboutUs">{defaultCopy.header.nav.aboutUs}</a>
+          <a href="#footer" data-i18n="header.nav.careers">{defaultCopy.header.nav.careers}</a>
+          <a href="#featured" data-i18n="header.nav.blog">{defaultCopy.header.nav.blog}</a>
         </nav>
 
         <div class="desktop-actions">
-          <a href="#download" class="btn-primary btn-nav">Download app</a>
+          <div
+            class="language-switch"
+            aria-label={defaultCopy.header.language.label}
+            data-i18n-aria-label="header.language.label"
+          >
+            <button type="button" data-lang="en" data-i18n="header.language.english">{defaultCopy.header.language.english}</button>
+            <button type="button" data-lang="fil" data-i18n="header.language.filipino">{defaultCopy.header.language.filipino}</button>
+          </div>
+          <a href="#download" class="btn-primary btn-nav" data-i18n="finalCta.button">{defaultCopy.finalCta.button}</a>
         </div>
 
         <div class="mobile-actions">
-          <a href="#download" class="mobile-download">Download</a>
-          <button type="button" class="mobile-menu-btn" aria-label="Open menu">
+          <div
+            class="language-switch language-switch-mobile"
+            aria-label={defaultCopy.header.language.label}
+            data-i18n-aria-label="header.language.label"
+          >
+            <button type="button" data-lang="en" data-i18n="header.language.englishShort">
+              {defaultCopy.header.language.englishShort}
+            </button>
+            <button type="button" data-lang="fil" data-i18n="header.language.filipinoShort">
+              {defaultCopy.header.language.filipinoShort}
+            </button>
+          </div>
+          <a href="#download" class="mobile-download" data-i18n="header.mobileDownload">{defaultCopy.header.mobileDownload}</a>
+          <button
+            type="button"
+            class="mobile-menu-btn"
+            aria-label={defaultCopy.header.menuAria}
+            data-i18n-aria-label="header.menuAria"
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -130,19 +140,19 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
       <section id="hero" class="section section-white hero-section">
         <div class="site-shell hero-grid">
           <div class="hero-copy">
-            <h1>Global finance for global Filipinos</h1>
-            <p>Secure, lightning fast transfers at guaranteed Google rates.</p>
-            <a href="#converter" class="btn-primary">Send money</a>
+            <h1 data-i18n="hero.title">{defaultCopy.hero.title}</h1>
+            <p data-i18n="hero.subtitle">{defaultCopy.hero.subtitle}</p>
+            <a href="#converter" class="btn-primary" data-i18n="hero.primaryCta">{defaultCopy.hero.primaryCta}</a>
           </div>
 
-          <div id="converter" class="converter-card" aria-label="Send money converter">
+          <div id="converter" class="converter-card" aria-label={defaultCopy.converter.title} data-i18n-aria-label="converter.title">
             <div class="converter-block">
-              <p class="converter-label">You Send</p>
+              <p class="converter-label" data-i18n="converter.sendAmount">{defaultCopy.converter.sendAmount}</p>
               <div class="converter-row">
                 <input id="sendAmount" class="amount-input" type="number" min="0" step="0.01" value="1000" inputmode="decimal" />
                 <div class="currency-selector-wrap">
                   <img id="sendFlag" src="/flags/us.svg" alt="" class="flag" aria-hidden="true" />
-                  <select id="sendCurrency" class="currency-selector" aria-label="Send currency">
+                  <select id="sendCurrency" class="currency-selector" aria-label={defaultCopy.converter.sendCurrency} data-i18n-aria-label="converter.sendCurrency">
                     {sendCurrencies.map((currency) => (
                       <option value={currency} selected={currency === "USD"}>
                         {currency}
@@ -152,12 +162,12 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
                 </div>
               </div>
               <div class="converter-divider"></div>
-              <p id="liveRate" class="live-rate">Live Google rate: 1 USD = PHP 56.20</p>
-              <p class="zero-fee-pill">Zero fee for first transfer</p>
+              <p id="liveRate" class="live-rate">{defaultCopy.converter.liveRatePrefix}: 1 USD = PHP 56.20</p>
+              <p id="promoText" class="zero-fee-pill" data-i18n="converter.promo">{defaultCopy.converter.promo}</p>
             </div>
 
             <div class="converter-block">
-              <p class="converter-label">They receive</p>
+              <p class="converter-label" data-i18n="converter.recipientGets">{defaultCopy.converter.recipientGets}</p>
               <div class="converter-row">
                 <strong id="receiveAmount" class="amount-output">PHP 56,200.00</strong>
                 <div class="currency-selector-wrap currency-fixed">
@@ -177,12 +187,12 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
             <div class="trust-marquee-track">
               <div class="trust-items">
                 {trustItems.map((item) => (
-                  <span>✓ {item}</span>
+                  <span data-i18n={item.key} data-prefix-check="true">✓ {item.text}</span>
                 ))}
               </div>
               <div class="trust-items" aria-hidden="true">
                 {trustItems.map((item) => (
-                  <span>✓ {item}</span>
+                  <span data-i18n={item.key} data-prefix-check="true">✓ {item.text}</span>
                 ))}
               </div>
             </div>
@@ -190,7 +200,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
           <ul class="trust-static-list">
             {trustItems.map((item) => (
-              <li>✓ {item}</li>
+              <li data-i18n={item.key} data-prefix-check="true">✓ {item.text}</li>
             ))}
           </ul>
         </div>
@@ -198,17 +208,17 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
       <section class="section section-lilac rates-section" id="rates">
         <div class="site-shell">
-          <h2 class="section-title">Unlock savings with Google rates to the Philippines</h2>
-          <p class="section-subtitle">Here's how much US$1,000 gets you with Aspora</p>
+          <h2 class="section-title" data-i18n="savings.title">{defaultCopy.savings.title}</h2>
+          <p class="section-subtitle" data-i18n="savings.subtitle">{defaultCopy.savings.subtitle}</p>
 
           <div class="rates-table-scroll">
-            <table class="rates-table" aria-label="Provider comparison table">
+            <table class="rates-table" aria-label={defaultCopy.savings.tableAria} data-i18n-aria-label="savings.tableAria">
               <thead>
                 <tr>
-                  <th scope="col">Provider</th>
-                  <th scope="col">Exchange rate</th>
-                  <th scope="col">Transfer fee</th>
-                  <th scope="col">Recipient gets</th>
+                  <th scope="col" data-i18n="savings.headers.provider">{defaultCopy.savings.headers.provider}</th>
+                  <th scope="col" data-i18n="savings.headers.rate">{defaultCopy.savings.headers.rate}</th>
+                  <th scope="col" data-i18n="savings.headers.fee">{defaultCopy.savings.headers.fee}</th>
+                  <th scope="col" data-i18n="savings.headers.recipient">{defaultCopy.savings.headers.recipient}</th>
                 </tr>
               </thead>
               <tbody>
@@ -221,7 +231,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
                   >
                     <td>{row.name}</td>
                     <td data-cell="rate">{row.effectiveRate.toFixed(2)}</td>
-                    <td data-cell="fee">{row.fee === 0 ? "US$0.00" : `US$${row.fee.toFixed(2)}`}</td>
+                    <td data-cell="fee">{row.fee === 0 ? defaultCopy.converter.noFee : `US$${row.fee.toFixed(2)}`}</td>
                     <td data-cell="recipient">
                       <div class="recipient-cell-wrap">
                         <span>{`PHP ${row.recipientGets.toLocaleString("en-US", {
@@ -229,7 +239,9 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
                           maximumFractionDigits: 2,
                         })}`}</span>
                         {row.id === "aspora" && (
-                          <span id="saveBadge" class="save-pill">Save PHP {initialSaveValue.toFixed(2)}</span>
+                          <span id="saveBadge" class="save-pill">
+                            {defaultCopy.savings.savePrefix} {initialSaveValue.toFixed(2)}
+                          </span>
                         )}
                       </div>
                     </td>
@@ -239,52 +251,68 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
             </table>
           </div>
 
-          <p id="tableUpdated" class="table-updated">Last updated at 06:01 PM GMT 29.03.26</p>
+          <p id="tableUpdated" class="table-updated" data-i18n="savings.updatedFallback">
+            {defaultCopy.savings.updatedFallback}
+          </p>
         </div>
       </section>
 
-      <section class="section section-white stats-section" aria-label="Aspora impact stats">
+      <section class="section section-white stats-section" aria-label={defaultCopy.stats.title} data-i18n-aria-label="stats.title">
         <div class="site-shell stats-grid">
           <article class="stat-item">
-            <h3>$2 Bn+</h3>
-            <p>Securely transferred worldwide</p>
+            <h3 data-i18n="stats.transferredValue">{defaultCopy.stats.transferredValue}</h3>
+            <p data-i18n="stats.transferredLabel">{defaultCopy.stats.transferredLabel}</p>
           </article>
           <article class="stat-item">
-            <h3>PHP 8.4 Bn+</h3>
-            <p>Saved by our users in forex fees</p>
+            <h3 data-i18n="stats.savedValue">{defaultCopy.stats.savedValue}</h3>
+            <p data-i18n="stats.savedLabel">{defaultCopy.stats.savedLabel}</p>
           </article>
           <article class="stat-item">
-            <h3>6 Countries</h3>
-            <p>Where we're live and serving OFWs</p>
+            <h3 data-i18n="stats.countriesValue">{defaultCopy.stats.countriesValue}</h3>
+            <p data-i18n="stats.countriesLabel">{defaultCopy.stats.countriesLabel}</p>
           </article>
         </div>
       </section>
 
       <section class="section section-white testimonials-section" id="testimonials">
         <div class="site-shell">
-          <h2 class="section-title testimonials-title">
-            Trusted by <span>1 million+ OFWs</span> around the world
-          </h2>
-          <p class="section-subtitle">For seamless and secure transfers</p>
+          <h2 class="section-title testimonials-title" data-i18n="testimonials.title">{defaultCopy.testimonials.title}</h2>
+          <p class="section-subtitle" data-i18n="testimonials.subtitle">{defaultCopy.testimonials.subtitle}</p>
 
           <div class="testimonial-nav">
-            <button id="testimonialPrev" type="button" class="icon-button" aria-label="Previous testimonials">←</button>
-            <button id="testimonialNext" type="button" class="icon-button" aria-label="Next testimonials">→</button>
+            <button
+              id="testimonialPrev"
+              type="button"
+              class="icon-button"
+              aria-label={defaultCopy.testimonials.prev}
+              data-i18n-aria-label="testimonials.prev"
+            >
+              ←
+            </button>
+            <button
+              id="testimonialNext"
+              type="button"
+              class="icon-button"
+              aria-label={defaultCopy.testimonials.next}
+              data-i18n-aria-label="testimonials.next"
+            >
+              →
+            </button>
           </div>
 
           <div id="testimonialTrack" class="testimonial-track">
-            {testimonials.map((testimonial) => (
+            {defaultCopy.testimonials.cards.slice(0, 3).map((testimonial, index) => (
               <article class="testimonial-card">
                 <div class="testimonial-head">
                   <span class="quote-mark" aria-hidden="true">“</span>
                   <div class="flag-pair" aria-hidden="true">
-                    <img src={testimonial.fromFlag} alt="" class="flag" />
-                    <img src={testimonial.toFlag} alt="" class="flag" />
+                    <img src={testimonialFlags[index].fromFlag} alt="" class="flag" />
+                    <img src={testimonialFlags[index].toFlag} alt="" class="flag" />
                   </div>
                 </div>
-                <p class="testimonial-quote">{testimonial.quote}</p>
-                <p class="testimonial-name">{testimonial.person}</p>
-                <p class="testimonial-location">{testimonial.location}</p>
+                <p class="testimonial-quote" data-i18n={`testimonials.cards.${index}.quote`}>{testimonial.quote}</p>
+                <p class="testimonial-name" data-i18n={`testimonials.cards.${index}.person`}>{testimonial.person}</p>
+                <p class="testimonial-location" data-i18n={`testimonials.cards.${index}.location`}>{testimonial.location}</p>
               </article>
             ))}
           </div>
@@ -296,25 +324,27 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           <div class="security-visual" aria-hidden="true">
             <div class="security-visual-card">
               <div class="security-lock">🔒</div>
-              <p>Bank-grade security for every peso transfer.</p>
+              <p data-i18n="security.visual">{defaultCopy.security.visual}</p>
             </div>
           </div>
 
           <div class="security-content">
-            <h2 class="section-title">Security-first. Always.</h2>
-            <p class="section-subtitle security-subtitle">Protecting your money at every step</p>
+            <h2 class="section-title" data-i18n="security.title">{defaultCopy.security.title}</h2>
+            <p class="section-subtitle security-subtitle" data-i18n="security.alwaysSubtitle">
+              {defaultCopy.security.alwaysSubtitle}
+            </p>
             <ul class="security-points">
               <li>
                 <span class="security-icon">✓</span>
-                <span>Proactive fraud detection around the clock</span>
+                <span data-i18n="security.point1">{defaultCopy.security.point1}</span>
               </li>
               <li>
                 <span class="security-icon">✓</span>
-                <span>Funds held with regulated financial institutions</span>
+                <span data-i18n="security.point2">{defaultCopy.security.point2}</span>
               </li>
               <li>
                 <span class="security-icon">✓</span>
-                <span>24x7 customer support</span>
+                <span data-i18n="security.point3">{defaultCopy.security.point3}</span>
               </li>
             </ul>
           </div>
@@ -324,14 +354,16 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
       <section id="gateway" class="section section-white gateway-section">
         <div class="site-shell gateway-grid">
           <div class="gateway-content">
-            <span class="coming-soon-badge">Coming soon</span>
-            <h2 class="section-title">Your gateway to the Philippines: Send, Pay, Invest</h2>
+            <span class="coming-soon-badge" data-i18n="gateway.badge">{defaultCopy.gateway.badge}</span>
+            <h2 class="section-title" data-i18n="gateway.title">{defaultCopy.gateway.title}</h2>
             <ul class="gateway-points">
-              <li>Save in global currencies with up to 9% interest</li>
-              <li>Stay on top of your bills without lifting a finger</li>
-              <li>Automate your remittances and recurring transfers</li>
+              <li data-i18n="gateway.feature1Body">{defaultCopy.gateway.feature1Body}</li>
+              <li data-i18n="gateway.feature2Body">{defaultCopy.gateway.feature2Body}</li>
+              <li data-i18n="gateway.feature3Body">{defaultCopy.gateway.feature3Body}</li>
             </ul>
-            <a class="btn-primary" href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer">See roadmap</a>
+            <a class="btn-primary" href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer" data-i18n="gateway.cta">
+              {defaultCopy.gateway.cta}
+            </a>
           </div>
 
           <div class="gateway-visual" aria-hidden="true">
@@ -347,7 +379,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
       <section id="featured" class="section section-white featured-section">
         <div class="site-shell">
-          <h2 class="section-title">As featured in</h2>
+          <h2 class="section-title" data-i18n="media.title">{defaultCopy.media.title}</h2>
           <div class="featured-logos" aria-label="Featured publications">
             {featuredOutlets.map((outlet) => (
               <span>{outlet}</span>
@@ -358,14 +390,14 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
       <section id="download" class="section cta-section">
         <div class="site-shell cta-inner">
-          <h2 class="section-title">Your world. Your money. Get the Aspora app.</h2>
-          <p class="section-subtitle">Wherever you're headed, Aspora makes finances simple.</p>
-          <div class="cta-downloads" aria-label="App download options">
-            <a href="#" class="store-badge" aria-label="Download on the App Store">
-              <span>Apple App Store</span>
+          <h2 class="section-title" data-i18n="finalCta.title">{defaultCopy.finalCta.title}</h2>
+          <p class="section-subtitle" data-i18n="finalCta.subtitle">{defaultCopy.finalCta.subtitle}</p>
+          <div class="cta-downloads" aria-label={defaultCopy.finalCta.downloadAria} data-i18n-aria-label="finalCta.downloadAria">
+            <a href="#" class="store-badge" aria-label={defaultCopy.finalCta.storeAppleAria} data-i18n-aria-label="finalCta.storeAppleAria">
+              <span data-i18n="finalCta.storeApple">{defaultCopy.finalCta.storeApple}</span>
             </a>
-            <a href="#" class="store-badge" aria-label="Get it on Google Play">
-              <span>Google Play</span>
+            <a href="#" class="store-badge" aria-label={defaultCopy.finalCta.storeGoogleAria} data-i18n-aria-label="finalCta.storeGoogleAria">
+              <span data-i18n="finalCta.storeGoogle">{defaultCopy.finalCta.storeGoogle}</span>
             </a>
           </div>
         </div>
@@ -375,29 +407,40 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
     <footer id="footer" class="site-footer">
       <div class="site-shell footer-inner">
         <div class="footer-top-row">
-          <a href="#hero" class="brand" aria-label="Aspora home">
+          <a
+            href="#hero"
+            class="brand"
+            aria-label={defaultCopy.header.brandAria}
+            data-i18n-aria-label="header.brandAria"
+          >
             <span class="brand-wordmark">Aspora</span>
           </a>
-          <div class="cta-downloads" aria-label="Footer app download options">
-            <a href="#" class="store-badge"><span>App Store</span></a>
-            <a href="#" class="store-badge"><span>Google Play</span></a>
+          <div class="cta-downloads" aria-label={defaultCopy.finalCta.downloadAria} data-i18n-aria-label="finalCta.downloadAria">
+            <a href="#" class="store-badge" aria-label={defaultCopy.finalCta.storeAppleAria} data-i18n-aria-label="finalCta.storeAppleAria">
+              <span data-i18n="finalCta.storeApple">{defaultCopy.finalCta.storeApple}</span>
+            </a>
+            <a href="#" class="store-badge" aria-label={defaultCopy.finalCta.storeGoogleAria} data-i18n-aria-label="finalCta.storeGoogleAria">
+              <span data-i18n="finalCta.storeGoogle">{defaultCopy.finalCta.storeGoogle}</span>
+            </a>
           </div>
         </div>
 
         <nav class="footer-links" aria-label="Footer navigation">
-          <a href="#hero">OFW banking</a>
-          <a href="#gateway">Pay bills</a>
-          <a href="#security">About us</a>
-          <a href="#footer">Careers</a>
-          <a href="#featured">Blog</a>
-          <a href="#rates">Currency rates</a>
-          <a href="#footer">Help</a>
-          <a href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer">Roadmap</a>
+          <a href="#hero" data-i18n="header.nav.sendMoney">{defaultCopy.header.nav.sendMoney}</a>
+          <a href="#gateway" data-i18n="header.nav.payBills">{defaultCopy.header.nav.payBills}</a>
+          <a href="#security" data-i18n="header.nav.aboutUs">{defaultCopy.header.nav.aboutUs}</a>
+          <a href="#footer" data-i18n="header.nav.careers">{defaultCopy.header.nav.careers}</a>
+          <a href="#featured" data-i18n="header.nav.blog">{defaultCopy.header.nav.blog}</a>
+          <a href="#rates" data-i18n="footer.pesoRates">{defaultCopy.footer.pesoRates}</a>
+          <a href="#footer" data-i18n="footer.helpCenter">{defaultCopy.footer.helpCenter}</a>
+          <a href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer" data-i18n="footer.roadmap">
+            {defaultCopy.footer.roadmap}
+          </a>
         </nav>
 
         <div class="country-groups">
           <div class="country-group">
-            <p>Live in</p>
+            <p data-i18n="footer.liveIn">{defaultCopy.footer.liveIn}</p>
             <div class="country-chips">
               {liveCountries.map((country) => (
                 <span>{country}</span>
@@ -406,7 +449,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           </div>
 
           <div class="country-group">
-            <p>Arriving soon in</p>
+            <p data-i18n="footer.arrivingSoon">{defaultCopy.footer.arrivingSoon}</p>
             <div class="country-chips">
               {arrivingSoonCountries.map((country) => (
                 <span>{country}</span>
@@ -416,22 +459,19 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         </div>
 
         <div class="footer-legal">
+          <p data-i18n="footer.regulatory">{defaultCopy.footer.regulatory}</p>
+          <p data-i18n="footer.disclaimer">{defaultCopy.footer.disclaimer}</p>
           <p>
-            Aspora Inc. is a U.S. money services business partner network. Philippine payouts are delivered through licensed banking and
-            e-money partners supervised by the Bangko Sentral ng Pilipinas (BSP).
+            <span data-i18n="footer.contactLabel">{defaultCopy.footer.contactLabel}</span>
+            <a href="mailto:help@aspora.com">help@aspora.com</a>
           </p>
-          <p>
-            Rates, fees, and delivery timelines vary by route, payment method, and partner network. Terms, eligibility, and compliance
-            checks apply.
-          </p>
-          <p>Contact: <a href="mailto:help@aspora.com">help@aspora.com</a></p>
         </div>
 
         <div class="footer-bottom-row">
-          <p>© 2025 Aspora.com (Vance Inc). All rights reserved.</p>
+          <p data-i18n="footer.copyright">{defaultCopy.footer.copyright}</p>
           <div class="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
+            <a href="#" data-i18n="footer.privacy">{defaultCopy.footer.privacy}</a>
+            <a href="#" data-i18n="footer.terms">{defaultCopy.footer.terms}</a>
             <a href="#">LinkedIn</a>
             <a href="#">X</a>
             <a href="#">Instagram</a>
@@ -442,13 +482,67 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
     <script
       define:vars={{
+        translations,
         sendCurrencyFlags,
         referenceAmount,
         fallbackMidRate,
       }}
     >
+      const STORAGE_KEY = "aspora-lang";
+
+      let currentLang = localStorage.getItem(STORAGE_KEY) || "en";
+      if (!translations[currentLang]) {
+        currentLang = "en";
+      }
+
+      const languageButtons = Array.from(document.querySelectorAll("[data-lang]"));
+
       const header = document.getElementById("siteHeader");
+      const amountInput = document.getElementById("sendAmount");
+      const sendCurrencyInput = document.getElementById("sendCurrency");
+      const sendFlag = document.getElementById("sendFlag");
+      const liveRateLabel = document.getElementById("liveRate");
+      const promoText = document.getElementById("promoText");
+      const receiveAmount = document.getElementById("receiveAmount");
+      const tableUpdated = document.getElementById("tableUpdated");
+      const saveBadge = document.getElementById("saveBadge");
+      const testimonialTrack = document.getElementById("testimonialTrack");
+      const testimonialPrev = document.getElementById("testimonialPrev");
+      const testimonialNext = document.getElementById("testimonialNext");
+
       let lastScrollY = window.scrollY;
+      let usdToPhp = fallbackMidRate;
+      let lastUpdatedAt = null;
+
+      const rates = {
+        USD: 1,
+        GBP: 0.79,
+        EUR: 0.92,
+        CAD: 1.36,
+        SGD: 1.35,
+        AED: 3.67,
+        PHP: fallbackMidRate,
+      };
+
+      const getNestedValue = (source, path) =>
+        path.split(".").reduce((accumulator, segment) => {
+          if (accumulator === undefined || accumulator === null) {
+            return undefined;
+          }
+
+          if (Array.isArray(accumulator) && /^\d+$/.test(segment)) {
+            return accumulator[Number(segment)];
+          }
+
+          return accumulator[segment];
+        }, source);
+
+      const t = (path) => {
+        const value = getNestedValue(translations[currentLang], path);
+        return typeof value === "string" ? value : path;
+      };
+
+      const localeForLanguage = () => (currentLang === "fil" ? "fil-PH" : "en-US");
 
       const handleHeaderOnScroll = () => {
         const currentScroll = window.scrollY;
@@ -462,30 +556,8 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         lastScrollY = currentScroll;
       };
 
-      window.addEventListener("scroll", handleHeaderOnScroll, { passive: true });
-
-      const rates = {
-        USD: 1,
-        GBP: 0.79,
-        EUR: 0.92,
-        CAD: 1.36,
-        SGD: 1.35,
-        AED: 3.67,
-        PHP: fallbackMidRate,
-      };
-
-      const amountInput = document.getElementById("sendAmount");
-      const sendCurrencyInput = document.getElementById("sendCurrency");
-      const sendFlag = document.getElementById("sendFlag");
-      const liveRateLabel = document.getElementById("liveRate");
-      const receiveAmount = document.getElementById("receiveAmount");
-      const tableUpdated = document.getElementById("tableUpdated");
-      const saveBadge = document.getElementById("saveBadge");
-
-      let usdToPhp = fallbackMidRate;
-
       const formatCurrency = (value, currency = "USD") =>
-        new Intl.NumberFormat("en-US", {
+        new Intl.NumberFormat(localeForLanguage(), {
           style: "currency",
           currency,
           minimumFractionDigits: 2,
@@ -493,7 +565,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         }).format(value);
 
       const formatNumber = (value, digits = 2) =>
-        new Intl.NumberFormat("en-US", {
+        new Intl.NumberFormat(localeForLanguage(), {
           minimumFractionDigits: digits,
           maximumFractionDigits: digits,
         }).format(value);
@@ -521,7 +593,11 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         }
 
         if (liveRateLabel) {
-          liveRateLabel.textContent = `Live Google rate: 1 ${sendCurrency} = PHP ${formatNumber(routeRate, 2)}`;
+          liveRateLabel.textContent = `${t("converter.liveRatePrefix")}: 1 ${sendCurrency} = PHP ${formatNumber(routeRate, 2)}`;
+        }
+
+        if (promoText) {
+          promoText.textContent = t("converter.promo");
         }
 
         if (sendFlag instanceof HTMLImageElement) {
@@ -550,7 +626,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           }
 
           if (feeCell) {
-            feeCell.textContent = formatCurrency(fee, "USD");
+            feeCell.textContent = fee === 0 ? t("converter.noFee") : formatCurrency(fee, "USD");
           }
 
           if (recipientCell) {
@@ -566,14 +642,14 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
 
         const saveValue = Math.max(asporaRecipient - bestCompetitorRecipient, 0);
         if (saveBadge) {
-          saveBadge.textContent = `Save PHP ${formatNumber(saveValue)}`;
+          saveBadge.textContent = `${t("savings.savePrefix")} ${formatNumber(saveValue)}`;
         }
       };
 
       const formatUpdatedLabel = (isoString) => {
         const date = new Date(isoString);
         if (Number.isNaN(date.getTime())) {
-          return "Last updated at 06:01 PM GMT 29.03.26";
+          return t("savings.updatedFallback");
         }
 
         const time = new Intl.DateTimeFormat("en-GB", {
@@ -590,7 +666,76 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           timeZone: "Europe/London",
         }).format(date);
 
-        return `Last updated at ${time} GMT ${day}`;
+        return `${t("savings.updated")}: ${time} GMT ${day}`;
+      };
+
+      const applyI18n = () => {
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+          const key = element.dataset.i18n;
+          if (!key) {
+            return;
+          }
+
+          const translatedText = getNestedValue(translations[currentLang], key);
+          if (typeof translatedText === "string") {
+            const needsCheckPrefix = element.dataset.prefixCheck === "true";
+            element.textContent = needsCheckPrefix ? `✓ ${translatedText}` : translatedText;
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+          const key = element.dataset.i18nAriaLabel;
+          if (!key) {
+            return;
+          }
+
+          const translatedText = getNestedValue(translations[currentLang], key);
+          if (typeof translatedText === "string") {
+            element.setAttribute("aria-label", translatedText);
+          }
+        });
+      };
+
+      const setLanguage = (nextLanguage) => {
+        if (!translations[nextLanguage]) {
+          return;
+        }
+
+        currentLang = nextLanguage;
+        localStorage.setItem(STORAGE_KEY, currentLang);
+        document.documentElement.lang = currentLang === "fil" ? "fil" : "en";
+
+        applyI18n();
+
+        languageButtons.forEach((button) => {
+          const isActive = button.dataset.lang === currentLang;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+
+        document.title = t("meta.title");
+
+        const descriptionTag = document.querySelector("meta[name='description']");
+        if (descriptionTag) {
+          descriptionTag.setAttribute("content", t("meta.description"));
+        }
+
+        const ogTitle = document.querySelector("meta[property='og:title']");
+        if (ogTitle) {
+          ogTitle.setAttribute("content", t("meta.title"));
+        }
+
+        const ogDescription = document.querySelector("meta[property='og:description']");
+        if (ogDescription) {
+          ogDescription.setAttribute("content", t("meta.description"));
+        }
+
+        updateConverter();
+        updateTable();
+
+        if (tableUpdated) {
+          tableUpdated.textContent = lastUpdatedAt ? formatUpdatedLabel(lastUpdatedAt) : t("savings.updatedFallback");
+        }
       };
 
       const fetchRates = async () => {
@@ -611,6 +756,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           }
 
           Object.assign(rates, payload.rates);
+          lastUpdatedAt = payload.updatedAt || new Date().toISOString();
 
           const latestUsdPhp = convertRate("USD", "PHP");
           if (latestUsdPhp) {
@@ -618,24 +764,33 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           }
 
           if (tableUpdated) {
-            tableUpdated.textContent = formatUpdatedLabel(payload.updatedAt || new Date().toISOString());
+            tableUpdated.textContent = formatUpdatedLabel(lastUpdatedAt);
           }
 
           updateConverter();
           updateTable();
         } catch {
-          // no-op fallback
+          if (tableUpdated) {
+            tableUpdated.textContent = t("savings.updatedFallback");
+          }
         }
       };
+
+      window.addEventListener("scroll", handleHeaderOnScroll, { passive: true });
+
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const language = button.dataset.lang;
+          if (language) {
+            setLanguage(language);
+          }
+        });
+      });
 
       if (amountInput && sendCurrencyInput) {
         amountInput.addEventListener("input", updateConverter);
         sendCurrencyInput.addEventListener("change", updateConverter);
       }
-
-      const testimonialTrack = document.getElementById("testimonialTrack");
-      const testimonialPrev = document.getElementById("testimonialPrev");
-      const testimonialNext = document.getElementById("testimonialNext");
 
       testimonialPrev?.addEventListener("click", () => {
         testimonialTrack?.scrollBy({ left: -320, behavior: "smooth" });
@@ -645,6 +800,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         testimonialTrack?.scrollBy({ left: 320, behavior: "smooth" });
       });
 
+      setLanguage(currentLang);
       updateConverter();
       updateTable();
       fetchRates();

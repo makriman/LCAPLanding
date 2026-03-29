@@ -143,13 +143,52 @@ main {
 .mobile-actions {
   align-items: center;
   display: inline-flex;
-  gap: 12px;
+  gap: 8px;
+}
+
+.language-switch {
+  align-items: center;
+  background: #f4f4f6;
+  border: 1px solid #d8d8de;
+  border-radius: 9999px;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+}
+
+.language-switch button {
+  background: transparent;
+  border: 0;
+  border-radius: 9999px;
+  color: rgba(17, 17, 17, 0.65);
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  min-width: 48px;
+  padding: 6px 10px;
+}
+
+.language-switch button.is-active {
+  background: var(--color-aspora-purple);
+  color: var(--color-white);
+}
+
+.language-switch-mobile {
+  padding: 2px;
+}
+
+.language-switch-mobile button {
+  font-size: 11px;
+  min-width: 34px;
+  padding: 4px 6px;
 }
 
 .mobile-download {
   color: rgba(17, 17, 17, 0.9);
   font-family: var(--font-label);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.2;
 }
@@ -227,6 +266,11 @@ main {
   line-height: 110%;
   margin: 0;
   max-width: 12ch;
+}
+
+html[lang="fil"] .hero-copy h1 {
+  font-size: 40px;
+  max-width: 13ch;
 }
 
 .hero-copy p {
@@ -966,6 +1010,20 @@ main {
   }
 }
 
+@media (max-width: 430px) {
+  .site-header-inner {
+    gap: 8px;
+  }
+
+  .mobile-actions {
+    gap: 6px;
+  }
+
+  .mobile-download {
+    font-size: 14px;
+  }
+}
+
 @media (min-width: 640px) {
   .site-shell {
     padding-inline: 40px;
@@ -983,6 +1041,16 @@ main {
     height: 64px;
   }
 
+  .mobile-download {
+    font-size: 18px;
+  }
+
+  .language-switch-mobile button {
+    font-size: 12px;
+    min-width: 38px;
+    padding: 5px 7px;
+  }
+
   .hero-section {
     padding-bottom: 90px;
     padding-top: 76px;
@@ -991,6 +1059,11 @@ main {
   .hero-copy h1 {
     font-size: 64px;
     max-width: 11ch;
+  }
+
+  html[lang="fil"] .hero-copy h1 {
+    font-size: 56px;
+    max-width: 12ch;
   }
 
   .hero-copy p {
@@ -1159,7 +1232,9 @@ main {
   }
 
   .desktop-actions {
-    display: block;
+    align-items: center;
+    display: inline-flex;
+    gap: 14px;
   }
 
   .mobile-actions {
@@ -1182,9 +1257,22 @@ main {
     max-width: 10ch;
   }
 
+  html[lang="fil"] .hero-copy h1 {
+    font-size: 78px;
+    max-width: 11ch;
+  }
+
   .hero-copy p {
     font-size: 24px;
     max-width: 27ch;
+  }
+
+  html[lang="fil"] .desktop-nav {
+    gap: 24px;
+  }
+
+  html[lang="fil"] .desktop-nav a {
+    font-size: 18px;
   }
 
   .converter-card {
