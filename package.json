@@ -11,5 +11,14 @@
   },
   "dependencies": {
     "astro": "^5.0.0"
+  },
+  "license": "MIT",
+  "description": "A high-fidelity Astro landing page for the US-to-Philippines remittance corridor.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makriman/LCAPLanding.git"
+  },
+  "bugs": {
+    "url": "https://github.com/makriman/LCAPLanding/issues"
   }
 }

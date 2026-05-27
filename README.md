@@ -1,44 +1,62 @@
-# Aspora Philippines Landing (Astro)
+# Aspora Philippines Landing
 
-High-fidelity mock landing page scaffold for Aspora focused on the US-to-Philippines remittance corridor and OFWs.
+A high-fidelity Astro landing page for the US-to-Philippines remittance corridor.
 
-## What is included
+## Mission
 
-- Astro scaffold from scratch
-- Localized copy with language switch (`English` / `Filipino`)
-- Language persistence via `localStorage`
-- Live remittance converter (USD/CAD/GBP/EUR/SGD/AED to PHP)
-- Rates API endpoint with 5-minute cache and fallback provider logic
-- Dynamic competitor comparison table driven by JSON data
-- Hero, savings, trust stats, testimonials carousel, security, gateway roadmap, media strip, final CTA, and localized footer
-- Responsive layout and accessible labels/semantic sections
+Remittance products win trust when the value is visible. This landing page makes exchange rates, fees, savings, testimonials, and corridor readiness easy to compare for overseas Filipino workers and their families.
 
-## Project structure
+## What This Repository Contains
 
-- `src/pages/index.astro` - page layout and client interactivity
-- `src/pages/api/rates.json.ts` - exchange rate API proxy/cache endpoint
-- `src/data/en.json` - English translations
-- `src/data/fil.json` - Filipino translations
-- `src/data/competitors.json` - provider margins, fees, delivery metadata, source links
-- `src/styles/global.css` - theme, layout, and responsive styles
-- `public/flags/*.svg` - lightweight flag icons for testimonial cards
+Astro landing page scaffold with English/Filipino copy, a live remittance converter, competitor comparison data, localized testimonials, security sections, and a lightweight rates API endpoint.
 
-## Run locally
+## Highlights
 
-1. Install Node.js 20+
-2. Install dependencies
-3. Start Astro dev server
+- English and Filipino localized copy.
+- USD, GBP, EUR, CAD, SGD, and AED to PHP converter.
+- Dynamic competitor comparison table driven by JSON.
+- Hero, savings, trust stats, testimonials, security, roadmap, media, CTA, and footer sections.
+
+## Tech Stack
+
+- Astro
+- TypeScript
+- Static data JSON
+- Client-side language persistence
+- Rates API endpoint with provider fallback
+
+## Getting Started
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Notes on data
+## Quality Checks
 
-- Converter pulls rates from `/api/rates.json`, which tries `open.er-api.com` first, then `exchangerate.host`, and falls back to static values if needed.
-- Competitor rows are estimation-friendly and update from `src/data/competitors.json`.
-- To refresh market assumptions, edit:
-  - `midMarketFallback`
-  - each provider's `marginPct`, `feeUsd`, `delivery`, and `sourceUrl`
+```bash
+npm run build
+```
 
+## Repository Notes
+
+- Market assumptions live in src/data/competitors.json and the rates API fallback values.
+- Refresh provider data before using this as production financial copy.
+
+## Contributing
+
+Contributions are welcome. The best contributions are specific, tested, and grounded in the product mission. Good places to help include documentation, accessibility, tests, bug reports, UI polish, data validation, and safer AI behavior.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+## Security
+
+Please do not open public issues for secrets, auth bypasses, data exposure, provider key leaks, or abuse vectors. Follow [SECURITY.md](SECURITY.md).
+
+## Code of Conduct
+
+This project follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Be direct, kind, and useful.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
