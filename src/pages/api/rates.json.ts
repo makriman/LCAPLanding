@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 
 const CACHE_TTL_MS = 5 * 60 * 1000;
+const UPSTREAM_TIMEOUT_MS = 8_000;
 const REQUIRED_CURRENCIES = ["USD", "CAD", "GBP", "EUR", "SGD", "AED", "PHP"] as const;
 
 type RatesPayload = {
@@ -53,6 +54,7 @@ const fetchFromOpenErApi = async (): Promise<RatesPayload> => {
     headers: {
       Accept: "application/json",
     },
+    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   });
 
   if (!response.ok) {
@@ -85,51 +87,20 @@ const fetchFromOpenErApi = async (): Promise<RatesPayload> => {
   };
 };
 
-const fetchFromExchangeRateHost = async (): Promise<RatesPayload> => {
-  const response = await fetch(
-    "https://api.exchangerate.host/latest?base=USD&symbols=CAD,GBP,EUR,SGD,AED,PHP",
-    {
-      headers: {
-        Accept: "application/json",
-      },
-    },
-  );
-
-  if (!response.ok) {
-    throw new Error(`exchangerate.host status ${response.status}`);
-  }
-
-  const payload = (await response.json()) as {
-    success?: boolean;
-    rates?: Record<string, number>;
-    date?: string;
-  };
-
-  if (!payload.rates) {
-    throw new Error("exchangerate.host returned unexpected payload");
-  }
-
-  const rates = pickRequiredRates(payload.rates);
-  if (!hasAllRequiredRates(rates)) {
-    throw new Error("exchangerate.host missing one or more required currencies");
-  }
-
-  return {
-    base: "USD",
-    rates,
-    updatedAt: payload.date ? new Date(payload.date).toISOString() : new Date().toISOString(),
-    source: "exchangerate.host",
-  };
-};
-
 const withCacheHeaders = (payload: RatesPayload) =>
   new Response(JSON.stringify(payload), {
     status: 200,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "public, max-age=60, s-maxage=300",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "no-referrer",
     },
   });
+
+// Public market snapshot. Prerender so a later server/hybrid switch cannot turn
+// this into an unauthenticated live proxy. The handler ignores the request.
+export const prerender = true;
 
 export const GET: APIRoute = async () => {
   const now = Date.now();
@@ -138,30 +109,24 @@ export const GET: APIRoute = async () => {
     return withCacheHeaders(cache.payload);
   }
 
-  const loaders = [fetchFromOpenErApi, fetchFromExchangeRateHost];
+  try {
+    const payload = await fetchFromOpenErApi();
+    cache = {
+      payload,
+      expiresAt: now + CACHE_TTL_MS,
+    };
+    return withCacheHeaders(payload);
+  } catch {
+    const fallback = {
+      ...fallbackPayload,
+      updatedAt: new Date().toISOString(),
+    };
 
-  for (const loadRates of loaders) {
-    try {
-      const payload = await loadRates();
-      cache = {
-        payload,
-        expiresAt: now + CACHE_TTL_MS,
-      };
-      return withCacheHeaders(payload);
-    } catch {
-      // try next provider
-    }
+    cache = {
+      payload: fallback,
+      expiresAt: now + CACHE_TTL_MS,
+    };
+
+    return withCacheHeaders(fallback);
   }
-
-  const fallback = {
-    ...fallbackPayload,
-    updatedAt: new Date().toISOString(),
-  };
-
-  cache = {
-    payload: fallback,
-    expiresAt: now + CACHE_TTL_MS,
-  };
-
-  return withCacheHeaders(fallback);
 };
