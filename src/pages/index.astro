@@ -56,6 +56,14 @@ const trustItems = [
 const featuredOutlets = ["CNBC", "YourStory", "Entrepreneur", "Economic Times", "Gulf News"];
 const liveCountries = ["US", "UK", "UAE", "EU", "SG", "PH"];
 const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
+
+// Escape every "<" so a translation string cannot close the JSON script element.
+const pageBootstrapJson = JSON.stringify({
+  translations,
+  sendCurrencyFlags,
+  referenceAmount,
+  fallbackMidRate,
+}).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -72,6 +80,11 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
     <meta property="og:site_name" content="Aspora" />
     <meta property="og:url" content="https://www.aspora.com" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://static-files.aspora.com; img-src 'self'; connect-src 'self'; form-action 'self'"
+    />
   </head>
   <body>
     <header id="siteHeader" class="site-header">
@@ -367,7 +380,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
               <li data-i18n="gateway.feature2Body">{defaultCopy.gateway.feature2Body}</li>
               <li data-i18n="gateway.feature3Body">{defaultCopy.gateway.feature3Body}</li>
             </ul>
-            <a class="btn-primary" href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer" data-i18n="gateway.cta">
+            <a class="btn-primary" href="https://aspora.frill.co/roadmap" target="_blank" rel="noopener noreferrer" data-i18n="gateway.cta">
               {defaultCopy.gateway.cta}
             </a>
           </div>
@@ -439,7 +452,7 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           <a href="#featured" data-i18n="header.nav.blog">{defaultCopy.header.nav.blog}</a>
           <a href="#rates" data-i18n="footer.pesoRates">{defaultCopy.footer.pesoRates}</a>
           <a href="#footer" data-i18n="footer.helpCenter">{defaultCopy.footer.helpCenter}</a>
-          <a href="https://aspora.frill.co/roadmap" target="_blank" rel="noreferrer" data-i18n="footer.roadmap">
+          <a href="https://aspora.frill.co/roadmap" target="_blank" rel="noopener noreferrer" data-i18n="footer.roadmap">
             {defaultCopy.footer.roadmap}
           </a>
         </nav>
@@ -486,17 +499,71 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
       </div>
     </footer>
 
-    <script
-      define:vars={{
-        translations,
-        sendCurrencyFlags,
-        referenceAmount,
-        fallbackMidRate,
-      }}
-    >
+    <script type="application/json" id="page-bootstrap" is:inline set:html={pageBootstrapJson}></script>
+    <script>
       const STORAGE_KEY = "aspora-lang";
+      const FLAG_SRC = /^\/flags\/[a-z0-9-]+\.svg$/;
+      const RATE_CODES = ["USD", "GBP", "EUR", "CAD", "SGD", "AED", "PHP"];
+      const DEFAULT_FLAGS = {
+        USD: "/flags/us.svg",
+        GBP: "/flags/gb.svg",
+        EUR: "/flags/eu.svg",
+        CAD: "/flags/ca.svg",
+        SGD: "/flags/sg.svg",
+        AED: "/flags/ae.svg",
+      };
+
+      const isPositiveNumber = (value) => typeof value === "number" && Number.isFinite(value) && value > 0;
+
+      const readBootstrap = () => {
+        const defaults = {
+          translations: {},
+          sendCurrencyFlags: { ...DEFAULT_FLAGS },
+          referenceAmount: 1000,
+          fallbackMidRate: 56.2,
+        };
+        const node = document.getElementById("page-bootstrap");
+        if (!(node instanceof HTMLElement) || !node.textContent) {
+          return defaults;
+        }
+
+        try {
+          const parsed = JSON.parse(node.textContent);
+          const translations = {};
+          for (const lang of ["en", "fil"]) {
+            const copy = parsed?.translations?.[lang];
+            if (copy && typeof copy === "object") {
+              translations[lang] = copy;
+            }
+          }
+
+          const sendCurrencyFlags = { ...defaults.sendCurrencyFlags };
+          const flags = parsed?.sendCurrencyFlags;
+          if (flags && typeof flags === "object") {
+            for (const [code, src] of Object.entries(flags)) {
+              if (typeof src === "string" && FLAG_SRC.test(src)) {
+                sendCurrencyFlags[code] = src;
+              }
+            }
+          }
+
+          return {
+            translations,
+            sendCurrencyFlags,
+            referenceAmount: isPositiveNumber(parsed?.referenceAmount) ? parsed.referenceAmount : defaults.referenceAmount,
+            fallbackMidRate: isPositiveNumber(parsed?.fallbackMidRate) ? parsed.fallbackMidRate : defaults.fallbackMidRate,
+          };
+        } catch {
+          return defaults;
+        }
+      };
+
+      const { translations, sendCurrencyFlags, referenceAmount, fallbackMidRate } = readBootstrap();
 
       let currentLang = localStorage.getItem(STORAGE_KEY) || "en";
+      if (currentLang !== "en" && currentLang !== "fil") {
+        currentLang = "en";
+      }
       if (!translations[currentLang]) {
         currentLang = "en";
       }
@@ -607,7 +674,8 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
         }
 
         if (sendFlag instanceof HTMLImageElement) {
-          sendFlag.src = sendCurrencyFlags[sendCurrency] || "/flags/us.svg";
+          const nextFlag = sendCurrencyFlags[sendCurrency];
+          sendFlag.src = typeof nextFlag === "string" && FLAG_SRC.test(nextFlag) ? nextFlag : "/flags/us.svg";
         }
       };
 
@@ -757,12 +825,22 @@ const arrivingSoonCountries = ["SA", "FR", "ES", "NL", "CA"];
           }
 
           const payload = await response.json();
-          if (!payload?.rates?.PHP) {
+          if (!payload || payload.base !== "USD" || !isPositiveNumber(payload?.rates?.PHP)) {
             return;
           }
 
-          Object.assign(rates, payload.rates);
-          lastUpdatedAt = payload.updatedAt || new Date().toISOString();
+          if (payload.rates && typeof payload.rates === "object") {
+            for (const code of RATE_CODES) {
+              if (isPositiveNumber(payload.rates[code])) {
+                rates[code] = payload.rates[code];
+              }
+            }
+          }
+
+          lastUpdatedAt =
+            typeof payload.updatedAt === "string" && !Number.isNaN(Date.parse(payload.updatedAt))
+              ? payload.updatedAt
+              : new Date().toISOString();
 
           const latestUsdPhp = convertRate("USD", "PHP");
           if (latestUsdPhp) {
